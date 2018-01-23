@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script type="text/javascript">
+
+
+	// 将window对象属性首字母相同的归为一个数组，分别输出各个数组
+
+    (function(global){
+    	var letter=[];    // letter存放26个小写字母
+    	for(var i=97;i<=122;i+=1){
+    		letter.push(String.fromCharCode(i));    // 将26个小写字母推入数组letter中
+    	}
+
+    	// 定义输出数组函数
+    	function myOutput(){
+    		var propertiesName=Object.getOwnPropertyNames(global).filter(function(element){   // 归类
+    			return element.indexOf(letter[j])===0?true:false;
+    		});
+    		if(propertiesName.length!==0){          // 如果数组为有元素，则输出数组
+                console.log(propertiesName);
+    		}
+    	}
+
+    	// 遍历各个字母
+    	for(var j=0;j<letter.length;j+=1){
+    		myOutput();
+    	}
+    })(window);
+
+
+	</script>
+</body>
+</html>
