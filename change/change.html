@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+	body{
+		margin:0;
+	}
+	div{
+		float:left;
+	}
+	ul{
+		position:relative;
+		margin:0;
+		padding:0;
+	}
+	ul::before,ul::after{
+		content:"";
+		display:block;
+		clear:both;
+	}
+	li{
+		float:left;
+        list-style-type:none;
+	}
+	img{
+		vertical-align:middle;
+	}
+	.display__block{
+		display:block;
+	}
+	.display__none{
+		display:none;
+	}
+    </style>
+</head>
+<body>
+	<div>
+	   <ul id="list">
+	      <li class="display__block">
+	   	    <img src="1.jpg" alt="加载失败">
+	      </li>
+	      <li class="display__none">
+	   	    <img src="2.jpg" alt="加载失败">
+	      </li>
+	      <li class="display__none">
+	   	    <img src="3.jpg" alt="加载失败">
+	      </li>	
+	   </ul>
+    </div>
+    <script type="text/javascript">
+    var ul=document.getElementById("list"),
+        li,
+        list=[],
+        index=0,
+        child=ul.firstElementChild;
+    while(child!==null){
+        list.push(child);
+        child=child.nextElementSibling;
+    }
+    function start(){
+        li=list[index];
+        li.className="display__none";
+        index=(index+1)%list.length;
+        list[index].className="display__block";
+    }
+    var intervalId=setInterval(start,1000);
+    ul.onmouseenter=function(){
+        clearInterval(intervalId);
+    };
+    ul.onmouseleave=function(){
+    	intervalId=setInterval(start,1000);
+    };
+    </script>
+</body>
+</html>
