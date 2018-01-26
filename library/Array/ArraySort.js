@@ -17,7 +17,7 @@ Array.prototype.bubbleSort=function(){
 		this[b]=temp;
 	}
 	for(var i=0,len1=this.length;i<len1;i+=1){
-		for(var j=0,len2=this.length-1;j<len2;j+=1){
+		for(var j=0,len2=this.length-1-i;j<len2;j+=1){
 			if(this[j]>this[j+1]){
 				exchangeNumber.apply(this,[j,j+1]);
 			}
