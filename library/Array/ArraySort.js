@@ -61,16 +61,16 @@ Array.prototype.insertionSort=function(){
     var temp,
         i,
         j;
-    for(i=1;i<array.length;i+=1){
+    for(i=1;i<this.length;i+=1){
         j=i;
-        temp=array[i];               // The variable temp as the second element of the array is the initial value of the element to be compared.
+        temp=this[i];               // The variable temp as the second element of the array is the initial value of the element to be compared.
 
         // If j>0 and the previous element is bigger than the variable temp , continue the loop. 
 
-        while(j>0&&array[j-1]>temp){
-            array[j]=array[j-1];
+        while(j>0&&this[j-1]>temp){
+            this[j]=this[j-1];
             j--;
         }
-        array[j]=temp;               // Finally,the temp is the first element of the array.
+        this[j]=temp;               // Finally,the temp is the first element of the array.
     }    
 };
