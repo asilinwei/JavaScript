@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+     <head>
+	     <meta charset="UTF-8">
+	     <title>Document</title>
+     </head>
+     <body>
+	     <script type="text/javascript">
+
+	     // 计算一个页面里共使用了多少种HTML标签（除去<!DOCTYPE html>）
+
+	     (function(){
+             var nodeList=document.getElementsByTagName("*"),    // 取得所有元素对象的nodelist对象
+                 i,
+                 j,
+                 count=0;                  // count用来计种类数
+
+             // 数组tagNames用来存放标签名
+                 
+             for(i=0,tagNames=[];i<nodeList.length;i+=1){
+                 tagNames.push(nodeList[i].tagName.toLowerCase());
+             }    
+             tagNames.sort();                  // 将每个标签名按字母排序，同名的标签名会排在一起
+
+             // 遍历排序后的数组tagNames
+
+             for(j=0;j<tagNames.length;j+=1){
+     
+                // 如果排序后当前元素和下一个元素不同，则count加1
+
+             	if(tagNames[j]!==tagNames[j+1]){       
+             		count++;
+             	}
+
+             }
+             console.log(count);     // 输出种类
+	     })();
+	     </script>
+     </body>
+</html>
