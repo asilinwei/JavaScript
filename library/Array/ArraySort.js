@@ -12,7 +12,7 @@
 Object.defineProperties(sharingFunction,{
 
     exchangeNumber:{
-        enumerable:false
+        configurable:false
     }
     
 });
@@ -21,15 +21,15 @@ Object.defineProperties(sharingFunction,{
 Object.defineProperties(Array.prototype,{
 
     bubbleSort:{
-        enumerable:false
+        configurable:false
     },
 
     selectionSort:{
-        enumerable:false
+        configurable:false
     },
 
     insertionSort:{
-        enumerable:false
+        configurable:false
     }
 
 });
