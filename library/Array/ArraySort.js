@@ -6,6 +6,38 @@
  */
 
 
+// All the methods cannot be modified.
+
+// The method of sharingFunction.
+Object.defineProperties(sharingFunction,{
+
+    exchangeNumber:{
+        enumerable:false
+    }
+    
+});
+
+// The method of Array.prototype.
+Object.defineProperties(Array.prototype,{
+
+    bubbleSort:{
+        enumerable:false
+    },
+
+    selectionSort:{
+        enumerable:false
+    },
+
+    insertionSort:{
+        enumerable:false
+    }
+
+});
+
+
+
+
+
  // The object is about sharing function.
 
  var sharingFunction={
