@@ -1,6 +1,6 @@
 /**
  * This is the function library for adding sort public method for native array of JavaScript.
- * You can introduction of this library through <script> tag.
+ * You can get this library through <script> tag.
  * You must introduce this file before you use it.
  * Also,this library is only for personal learning. 
  */
