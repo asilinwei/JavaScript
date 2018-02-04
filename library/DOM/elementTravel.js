@@ -11,6 +11,8 @@
 // The method of HTMLElement.prototype
 
 Object.defineProperties(HTMLElement.prototype,{
+
+	// You can pass the number of the floor to this method.
 	getElementAncestor:{
 		value:function(floor){
 			if(this.nodeType===1){
@@ -36,8 +38,12 @@ Object.defineProperties(HTMLElement.prototype,{
 				return null;
 			}
 		},
+
+        // Cannot be modified.
 		writable:false,
+
 		configurable:false,
+
 		enumerable:true
 	}
 });
