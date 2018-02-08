@@ -6,41 +6,40 @@
  */
 
 
-// 共享函数对象。
+// 共享构造函数
 
- var sharingFunction={};
+function ShareFunction(){
+    Object.defineProperties(this,{
+
+        // 两数交换方法
+        exchangeNumber:{
+
+            value:function(index1,index2){
+                var temp;
+                temp=this[index1];
+                this[index1]=this[index2];
+                this[index2]=temp;
+            },
+
+            // 无法修改
+            writable:false,
+
+            // 无法配置
+            configurable:false,
+
+            // 可以枚举出来
+            enumerable:true
+            
+        }
+    });
+}
 
 
-// 所有方法都不能被更改。
+// 共享函数实例
 
-// 共享函数对象上的方法
+var sharingFunction=new ShareFunction();
 
-Object.defineProperties(sharingFunction,{
 
-    // 两数交换。
-
-    exchangeNumber:{
-        value:function(index1,index2){
-            var temp;
-            temp=this[index1];
-            this[index1]=this[index2];
-            this[index2]=temp;
-        },
-
-        // 不能被更改。
-
-        writable:false,
-
-        // 不能配置。
-
-        configurable:false,
-
-        // 可以枚举
-
-        enumerable:true
-    }
-    
-});
 
 // Array.prototype上的方法。
 
