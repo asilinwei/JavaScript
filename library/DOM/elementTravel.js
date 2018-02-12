@@ -108,5 +108,57 @@ Object.defineProperties(HTMLElement.prototype,{
 
 		enumerable:true
 		
+	},
+
+	// 获取元素后代所有文本节点并拼接
+
+	getElementTextContent:{
+
+		value:function(){
+
+			var text=[];      // 收集所有文本的数组
+            
+            // 递归函数
+            function recurrenceHandler(e){
+            	var childNodes=e.childNodes;    // 获取元素所有子节点
+
+            	// 遍历
+            	for(var i=0,len=childNodes.length;i<len;i+=1){
+                	
+                	// 筛选
+                    switch(childNodes[i].nodeType){
+
+                    	// 如果是元素节点，则递归遍历元素子节点
+                    	case 1:
+                             recurrenceHandler(childNodes[i]);
+                             break;
+
+                        // 如果是文本节点，则推入数组text
+                        case 3:
+                             text.push(childNodes[i].nodeValue);
+                             break;
+
+                    }
+
+            	}
+
+            }
+
+            recurrenceHandler(this);
+            return text.join("").match(/\S+/gi).join("");  // 返回拼接字符串
+		},
+
+		// 无法更改
+
+		writable:false,
+
+		// 无法配置
+
+		configurable:false,
+
+		// 能够被枚举
+
+		enumerable:true
+		
 	}
 });
