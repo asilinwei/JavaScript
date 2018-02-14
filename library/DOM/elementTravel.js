@@ -160,5 +160,56 @@ Object.defineProperties(HTMLElement.prototype,{
 
 		enumerable:true
 		
+	},
+
+	// 获取指定元素后代中指定名字的所有元素并返回一个数组，类似getElementsByTagName(tagName)方法
+
+	getChildElementsByTagName:{
+
+		value:function(tagName){
+			var childElements=[];     // 定义存放指定名字的后代元素的数组
+
+			// 递归函数
+			function recurrenceHandler(e){
+				for(var i=0,len=e.childNodes.length;i<len;i+=1){
+
+					// 判断是否为元素节点
+					if(e.childNodes[i].nodeType===1){
+
+						// 如果是指定元素则推入数组并递归遍历后代节点
+                    	if(e.childNodes[i].nodeName.toLowerCase()===tagName){
+                    		childElements.push(e.childNodes[i]);
+                    		recurrenceHandler(e.childNodes[i]);     
+
+                    	// 如果不是则递归遍历后代节点	
+                    	} else{
+                    		recurrenceHandler(e.childNodes[i]);        
+                    	}
+					} else{
+						continue;
+					}
+				}
+			}
+
+			// 检查传入的参数
+			if(this.nodeType!==1&&typeof tagName!=="string"){
+				throw new Error("parameter error.");
+			} else{
+                recurrenceHandler(this);
+			}
+			return childElements;
+		},
+
+		// 无法更改
+
+		writable:false,
+
+		// 无法配置
+
+		configurable:false,
+
+		// 能够被枚举
+
+		enumerable:true
 	}
 });
