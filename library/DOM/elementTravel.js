@@ -192,7 +192,7 @@ Object.defineProperties(HTMLElement.prototype,{
 			}
 
 			// 检查传入的参数
-			if(this.nodeType!==1&&typeof tagName!=="string"){
+			if(this.nodeType!==1||typeof tagName!=="string"){
 				throw new Error("parameter error.");
 			} else{
                 recurrenceHandler(this);
