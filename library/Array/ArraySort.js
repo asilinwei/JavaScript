@@ -8,7 +8,7 @@
 
 // 共享构造函数
 
-function ShareFunction(){
+function ShareFunctionSort(){
     Object.defineProperties(this,{
 
         // 两数交换方法
@@ -37,7 +37,7 @@ function ShareFunction(){
 
 // 共享函数实例
 
-var sharingFunction=new ShareFunction();
+var sharingFunctionSort=new ShareFunctionSort();
 
 
 
@@ -52,7 +52,7 @@ Object.defineProperties(Array.prototype,{
             for(var i=0,len1=this.length;i<len1;i+=1){
                 for(var j=0,len2=this.length-1-i;j<len2;j+=1){
                     if(this[j]>this[j+1]){
-                        sharingFunction.exchangeNumber.apply(this,[j,j+1]);
+                        sharingFunctionSort.exchangeNumber.apply(this,[j,j+1]);
                     }
                 }
             }
@@ -84,7 +84,7 @@ Object.defineProperties(Array.prototype,{
                     }
                 }
                 if(i!==indexMin){
-                    sharingFunction.exchangeNumber.apply(this,[i,indexMin]);
+                    sharingFunctionSort.exchangeNumber.apply(this,[i,indexMin]);
                 }
             }
         },
