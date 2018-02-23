@@ -33,6 +33,31 @@
  		};
  	};
 
+
+    // 获取元素文档坐标，该函数返回一个坐标对象
+    this.getDocumentPosition=function(element){
+        if(element&&element.nodeType===1){     // 判断节点类型
+           // 初始化文档坐标
+            var offsetX=0,
+                offsetY=0;
+            while(element){
+                if(element.offsetParent!==null||element===document.body){
+                    offsetX+=element.offsetLeft;       // 累加
+                    offsetY+=element.offsetTop;
+                    element=element.offsetParent;      // 将element修改为最近的定位元素     
+                } else{
+                    throw new Error("The display of element.offsetParent is none.");
+                }
+            }
+            return {                 // 返回文档坐标对象
+                x:offsetX,
+                y:offsetY
+            };
+        } else{
+            return null;             // 如果节点不是元素，返回null
+        }
+    };
+
  }
 
 // 共享实例
