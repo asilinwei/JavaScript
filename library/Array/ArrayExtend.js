@@ -6,6 +6,14 @@
 
 // 共享接口
 function ShareExtend(){
+
+	// 定义将一个数组的元素推入另一个数组的方法，参数array2的所有元素都推入array1
+	this.pushArray=function(array1,array2){
+    	for(var i=0,len=array2.length;i<len;i+=1){
+    		array1.push(array2[i]);
+    	}
+	};
+
 } 
 
 var shareExtend=new ShareExtend();
@@ -55,5 +63,50 @@ Object.defineProperties(Array.prototype,{
 
 		// 可以被枚举
 		enumerable:true
-	}
+	},
+
+	// 将数组分割成指定长度的子数组，这个方法创建并返回一个新数组，这些子数组将作为新数组的元素
+    __chunk:{
+    	value:function(size){     // size为子数组的长度
+    		var storeArray=[],    // 将要返回的新数组
+    		    chunk=[],         // 子数组
+                i;
+            switch(true){
+            	// 如果本数组长度为0
+            	case !this.length:
+                     return storeArray;  // 新数组将作为空数组返回
+                // 如果本数组长度大于0且size为0或不指定子数组长度
+                case this.length>0&&(size===0||size===undefined):
+                     shareExtend.pushArray(storeArray,this);
+                     return storeArray;
+                // 如果本数组长度大于0且size大于0
+                case this.length>0&&size>0:
+                     if(size>=this.length){      // 如果指定的长度大于或等于本数组长度则返回本数组的副本
+                     	shareExtend.pushArray(storeArray,this);
+                     	return storeArray;
+                     } else{                    // 否则正常分组
+                     	for(i=0,len=this.length;i<len;i+=1){   // 遍历本数组
+                     		chunk.push(this[i]);          
+                     		if((i+1)%size===0){        // 如果遍历到本数组指定的长度，则将子数组推入新数组
+                     			storeArray.push(chunk);
+                     			chunk=[];       
+                     		}
+                     	}
+                     	if(chunk.length){      // 将本数组剩余元素作为子数组的元素推入新数组
+                     		storeArray.push(chunk);
+                     	}
+                     	return storeArray;
+                     }          
+            }    
+    	},
+
+    	// 不可修改
+    	writable:false,
+
+    	// 不可重新配置
+    	configurable:false,
+
+    	// 可以被枚举
+    	enumerable:true
+    }
 });
