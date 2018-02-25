@@ -112,6 +112,34 @@
 
             // 可以被枚举
             enumerable:true
+        },
+
+        // 返回一个新数组，该新数组的元素是调用方法的数组删除falsey值的结果，falsey值有null,undefined,0,"",false以及NaN
+        __compact:{
+            value:function(){
+                var storeArray=[],    // 将要作为返回值的数组
+                    i;
+                if(!this.length){
+                    return [];          // 如果调用方法的数组长度为0，返回空数组。
+                } else{
+                    for(i=0,len=this.length;i<len;i+=1){
+                        if(!this[i]){
+                            continue;
+                        }
+                        storeArray.push(this[i]);
+                    }
+                    return storeArray;
+                }
+            },
+
+            // 无法修改
+            writable:false,
+
+            // 无法重新配置
+            configurable:false,
+
+            // 可以枚举
+            enumerable:true
         }
     });
 })();
