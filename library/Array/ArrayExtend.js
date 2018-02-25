@@ -140,6 +140,44 @@
 
             // 可以枚举
             enumerable:true
+        },
+
+        // 返回一个新数组，该新数组的元素是从前删除调用该方法的数组n个元素后剩余的元素
+        __drop:{
+            value:function(n){
+                var storeArray=[],     // 要返回的数组
+                    i;
+                if(typeof n==="number"||n===undefined){
+                    switch(true){
+                        case n>0&&n<this.length&&this.length>0:
+                             i=n;
+                             while(i<this.length){
+                                storeArray.push(this[i++]);
+                             }
+                             return storeArray;
+                        case (n===0||n===undefined||n>=this.length)&&this.length>0:
+                             for(i=0,len=this.length;i<len;i+=1){
+                                storeArray.push(this[i]);
+                             }     
+                             return storeArray;
+                        case !this.length:
+                             return [];
+                        default:
+                             return null;         
+                    }
+                } else{
+                    throw new Error("n must be a number.");
+                }  
+            },
+
+            // 不可修改
+            writable:false,
+
+            // 不可重新配置
+            configurable:false,
+
+            // 可以枚举
+            writable:true
         }
     });
 })();
