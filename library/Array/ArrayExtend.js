@@ -212,6 +212,55 @@
 
             // 可以枚举
             enumerable:true
+        },
+
+        // 将数组指定索引区间的所有元素替换成指定值，element为指定的替换值，start为区间的开始，end为区间结束，该方法会改变调用该方法的数组。
+        // 如果指定开始索引和结束索引相等则该索引的值将被替换
+        __fill:{
+            value:function(element,start,end){
+                var i,
+                    j,
+                    len,
+                    count;
+                if(!this.length||element===undefined){     // 如果调用方法的数组为空或不指定替换值则不改变数组
+                    return;
+                } else{
+                    switch(true){
+                        case start>=0&&end<this.length:
+                             if(end<start){
+                                return;
+                             } else{
+                                for(i=0,len=this.length;i<len;i+=1){
+                                    if(i===start){
+                                        for(j=start,count=0;count<=end-start;j+=1,count+=1){
+                                            this[j]=element;
+                                        }
+                                        break;
+                                    }
+                                }
+                                return;
+                             }
+                        case start<0||end<0||end>=this.length:
+                             throw new Error("The interval is overflow.");
+                        case start===undefined||end===undefined:            // 如果不指定区间则整个数组全部替换
+                             for(i=0,len=this.length;i<len;i+=1){   
+                                this[i]=element;
+                             }         
+                             return;
+                        default:
+                             return;     
+                    }
+                }
+            },
+
+            // 无法修改
+            writable:false,
+
+            // 无法重新配置
+            configurable:false,
+
+            // 可以枚举
+            enumerable:true
         }
     });
 })();
