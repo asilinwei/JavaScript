@@ -95,7 +95,7 @@
             // 无法重新配置
             configurable:false,
 
-            // 可以被枚举
+            // 可以枚举
             enumerable:true
         },
 
@@ -321,6 +321,43 @@
 
             // 可以枚举
             enumerable:true
-         }
+         },
+
+
+         // 返回数组第一个元素
+         /**
+          * var array1=[1,2,3,4,5];
+          * console.log(array1.__head());
+          * => 1
+          * var array2=[];
+          * console.log(array2.__head());
+          * => undefined
+          */
+         __head:{
+            value:function(){
+                return this.length?this[0]:undefined;
+            },
+            writable:false,
+            configurable:false,
+            enumerable:true
+         },
+
+         // 返回数组最后一个元素
+         /**
+          * var array1=[1,2,3,4,5];
+          * console.log(array1.__last());
+          * => 5
+          * var array2=[];
+          * console.log(array2.__last());
+          * => undefined
+          */
+          __last:{
+            value:function(){
+                return this.length?this[this.length-1]:undefined;
+            },
+            writable:false,
+            configurable:false,
+            enumerable:true
+          }
     });
 })();
