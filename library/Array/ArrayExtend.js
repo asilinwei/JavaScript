@@ -358,6 +358,39 @@
             writable:false,
             configurable:false,
             enumerable:true
-          }
+          },
+
+          // 该方法将函数减少一个维度，并返回对应新数组
+          /**
+           * var array=[1,2,3,[4,5,[6,7],8],9,10];
+           * console.log(array.__flatten());
+           * => [1,2,3,4,5,[6,7],8,9,10]
+           */
+          __flatten:{
+            value:function(){
+               var storeArray=[],
+                   i,
+                   j,
+                   len1,
+                   len2;
+               if(!this.length){
+                  return [];
+               } else{
+                  for(i=0,len1=this.length;i<len1;i+=1){
+                      if(Object.prototype.toString.apply(this[i])==="[object Array]"){
+                          for(j=0,len2=this[i].length;j<len2;j+=1){
+                              storeArray.push(this[i][j]);
+                          }
+                      } else{
+                          storeArray.push(this[i]);
+                      }
+                  }
+                  return storeArray;
+               }    
+            },
+            writable:false,
+            configurable:false,
+            enumerable:true
+          } 
     });
 })();
