@@ -14,7 +14,40 @@
                 array1.push(array2[i]);
             }
         };
-
+        
+        // 根据条件寻找索引的方法
+        this.findIndex=function(array,condition){
+            var i,
+                len;
+            if(condition){
+                switch(true){
+                    case typeof condition==="function":
+                         for(i=0,len=array.length;i<len;i+=1){
+                            if(Object.prototype.toString.apply(array[i])==="[object Object]"){
+                                if(condition(array[i])){
+                                    return i;
+                                } 
+                            } else{
+                                break;
+                            }
+                         }
+                         break;
+                    case Object.prototype.toString.apply(condition)==="[object Object]":
+                         for(i=0,len=array.length;i<len;i+=1){
+                            if(Object.prototype.toString.apply(array[i])==="[object Object]"){
+                                if(JSON.stringify(condition)===JSON.stringify(array[i])){
+                                    return i;
+                                } 
+                            } else{
+                                break;
+                            }
+                         }     
+                         break;
+                }
+            } else{
+                return undefined;
+            } 
+        };
     } 
 
     var share=new Share();
@@ -261,6 +294,33 @@
 
             // 可以枚举
             enumerable:true
-        }
+        },
+
+        // 返回符合条件的第一个元素的索引值，数组元素必须是对象，条件参数可以是函数或指定对象
+        /**
+         * var users = [
+              { 'user': 'barney',  'active': false },
+              { 'user': 'fred',    'active': false },
+              { 'user': 'pebbles', 'active': true }
+           ];
+         * console.log(users.__findIndex(function(o){return o.user==='barney';}));
+         * => 0
+         * console.log(users.__findIndex({user:'fred',active:false}));
+         * => 1
+         */
+         __findIndex:{
+            value:function(condition){
+                return this.length?share.findIndex(this,condition):undefined;
+            },
+            
+            // 无法修改
+            writable:false,
+
+            // 无法重新配置
+            configurable:false,
+
+            // 可以枚举
+            enumerable:true
+         }
     });
 })();
