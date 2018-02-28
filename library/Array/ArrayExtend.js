@@ -48,6 +48,21 @@
                 return undefined;
             } 
         };
+
+        // 递归遍历数组的方法
+        this.recurrenceTravel=function(arr2,store){
+            var i,
+                len;
+            if(arr2.length!==0&&store!==undefined){
+                for(i=0,len=arr2.length;i<len;i+=1){
+                    if(Object.prototype.toString.apply(arr2[i])==="[object Array]"){
+                        this.recurrenceTravel(arr2[i],store);
+                    } else{
+                        store.push(arr2[i]);
+                    }
+                }
+            }    
+        };
     } 
 
     var share=new Share();
@@ -360,7 +375,7 @@
             enumerable:true
           },
 
-          // 该方法将函数减少一个维度，并返回对应新数组
+          // 该方法将数组减少一个维度，并返回对应新数组
           /**
            * var array=[1,2,3,[4,5,[6,7],8],9,10];
            * console.log(array.__flatten());
@@ -391,6 +406,27 @@
             writable:false,
             configurable:false,
             enumerable:true
-          } 
+          },
+
+          // __flatten方法的深度版，将多维数组转变为一维数组并返回对应新数组
+          /**
+           * var array=[1,2,3,[4,5,[6,7,[11,12]]],[8,[9,10,11]]];
+           * console.log(array.__flattenDeep());
+           * => [1,2,3,4,5,6,7,11,12,8,9,10,11]
+           */
+           __flattenDeep:{
+              value:function(){
+                var storeArray=[];
+                if(!this.length){
+                    return [];
+                } else{
+                    share.recurrenceTravel(this,storeArray);
+                }
+                return storeArray;
+              },
+              writable:false,
+              configurable:false,
+              enumerable:true
+           }
     });
 })();
