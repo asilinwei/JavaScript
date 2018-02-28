@@ -63,6 +63,22 @@
                 }
             }    
         };
+
+        // 递归指定维度的遍历数组的方法
+        this.recurrenceTravelDepth=function(arr2,store,count){
+            var i,
+                len;
+            if(arr2.length!==0&&store!==undefined&&count!==undefined){
+                for(i=0,len=arr2.length;i<len;i+=1){
+                    if(Object.prototype.toString.apply(arr2[i])==="[object Array]"&&count>0){
+                        count--;
+                        this.recurrenceTravelDepth(arr2[i],store,count);
+                    } else{
+                        store.push(arr2[i]);
+                    }
+                }
+            }    
+        };
     } 
 
     var share=new Share();
@@ -427,6 +443,39 @@
               writable:false,
               configurable:false,
               enumerable:true
-           }
+           },
+
+           // 该方法将数组减少指定维度，并返回对应新数组，默认不减少维度，如果指定维度超过调用方法的数组的维度则返回一维数组
+           /**
+            * var array=[1,[2,[3,[4]]],5];
+            * console.log(array.__flattenDepth());
+            * => [1,[2,[3,[4]]],5]
+            * console.log(array.__flattenDepth(1));
+            * => [1,2,[3,[4]],5]
+            * console.log(array.__flattenDepth(2));
+            * => [1,2,3,[4],5]
+            * console.log(array.__flattenDepth(3));
+            * => [1,2,3,4,5]
+            * console.log(array.__flattenDepth(4));
+            * => [1,2,3,4,5]
+            */
+            __flattenDepth:{
+                value:function(n){
+                    var storeArray=[];
+                    if(!this.length){
+                        return [];
+                    } else{
+                        if(n!==undefined){
+                            share.recurrenceTravelDepth(this,storeArray,n);
+                        } else{
+                            share.pushArray(storeArray,this);
+                        }
+                        return storeArray;
+                    }
+                },
+                writable:false,
+                configurable:false,
+                enumerable:true
+            }
     });
 })();
