@@ -476,6 +476,35 @@
                 writable:false,
                 configurable:false,
                 enumerable:true
-            }
+            },
+
+            // 将数组元素转为对象的键值对，返回一个新对象
+            /**
+             * var array=[['a',1],['b',2]];
+             * console.log(array.__fromPairs());
+             * => {a:1,b:2}
+             */
+             __fromPairs:{
+                value:function(){
+                    var obj={},
+                        i,
+                        len;
+                    if(!this.length){
+                        return {};
+                    } else{
+                        for(i=0,len=this.length;i<len;i+=1){
+                            if(Object.prototype.toString.apply(this[i])==="[object Array]"&&this[i].length===2&&typeof this[i][0]==="string"){
+                                obj[this[i][0]]=this[i][1];
+                            } else{
+                                throw new Error("Not pairs.");
+                            }
+                        }
+                        return obj;
+                    }    
+                },
+                writable:false,
+                configurable:false,
+                enumerable:true
+             }
     });
 })();
