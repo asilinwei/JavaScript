@@ -89,6 +89,16 @@
             }
             return -1;
         };
+
+        // 从数组最后查找值返回索引
+        this.returnValueLast=function(arr2,val,from){
+            for(var i=from;i>=0;i-=1){
+                if(arr2[i]===val){
+                    return i;
+                }
+            }
+            return -1;
+        };
     } 
 
     var share=new Share();
@@ -534,6 +544,43 @@
                   writable:false,
                   configurable:false,
                   enumerable:true
-              }
+              },
+
+              // 删除数组最后的元素
+              /**
+               * var array=[1,2,3,4,5];
+               * array.__initial();
+               * console.log(array);
+               * => [1,2,3,4]
+               */
+               __initial:{
+                  value:function(){
+                      if(this.length){
+                          this.length-=1;
+                      }
+                  },
+                  writable:false,
+                  configurable:false,
+                  enumerable:true
+               },
+
+               // 根据指定值从后向前查找数组元素返回索引，如果未找到则返回-1
+               /**
+                * var array=[1,2,1,2];
+                * console.log(array.__indexOfLast(2));
+                * => 3
+                * console.log(array.__indexOfLast(2,2));
+                * => 1
+                */
+               __indexOfLast:{
+                  value:function(value,fromIndex){
+                      return !this.length||value===undefined?undefined
+                             :(fromIndex===undefined?share.returnValueLast(this,value,this.length-1)
+                              :share.returnValueLast(this,value,fromIndex));
+                  },
+                  writable:false,
+                  configurable:false,
+                  enumerable:true
+               }
     });
 })();
