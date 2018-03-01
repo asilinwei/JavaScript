@@ -79,6 +79,16 @@
                 }
             }    
         };
+
+        // 查找值返回索引
+        this.returnValue=function(arr2,val,from){
+            for(var i=from,len=arr2.length;i<len;i+=1){
+                if(arr2[i]===val){
+                    return i;
+                }
+            }
+            return -1;
+        };
     } 
 
     var share=new Share();
@@ -505,6 +515,25 @@
                 writable:false,
                 configurable:false,
                 enumerable:true
-             }
+             },
+
+             // 根据指定值查找数组元素返回索引，如果未找到返回-1
+             /**
+              * var array=[1,2,1,2];
+              * console.log(array.__indexOf(2));
+              * => 1
+              * console.log(array.__indexOf(2,2));
+              * => 3
+              */
+              __indexOf:{
+                  value:function(value,fromIndex){
+                      return !this.length||value===undefined?undefined
+                             :(fromIndex===undefined?share.returnValue(this,value,0)
+                              :share.returnValue(this,value,fromIndex));
+                  },
+                  writable:false,
+                  configurable:false,
+                  enumerable:true
+              }
     });
 })();
