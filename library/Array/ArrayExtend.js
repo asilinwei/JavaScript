@@ -581,6 +581,26 @@
                   writable:false,
                   configurable:false,
                   enumerable:true
-               }
+               },
+
+               // 根据指定索引index返回对应元素，如果索引index是负数，则返回从结尾开始的第index个元素。
+               /**
+                * var array=[1,2,3,4,5];
+                * console.log(array.__nth(0));
+                * => 1
+                * console.log(array.__nth(-1));
+                * => 5
+                */
+                __nth:{
+                    value:function(index){
+                        return !this.length||index===undefined||index>this.length-1?undefined
+                                :(index>=0?this[index]
+                                  :this[index%this.length===0?0
+                                    :this.length+index%this.length]);
+                    },
+                    writable:false,
+                    configurable:false,
+                    enumerable:true
+                }
     });
 })();
