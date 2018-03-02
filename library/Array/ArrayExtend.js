@@ -638,6 +638,39 @@
                   writable:false,
                   configurable:false,
                   enumerable:true
-               }   
+               },
+
+               // 从数组中删除指定索引的元素，并返回已删除元素的新数组
+               /**
+                * var array=['a','b','c','d'];
+                  console.log(array.__pullAt([1,3]));
+                  => ['b','d']
+                  console.log(array);
+                  => ['a','c']
+                */
+                __pullAt:{
+                    value:function(index){
+                        var i,
+                            j,
+                            len1,
+                            len2,
+                            storeArray=[];
+                        if(this.length&&Object.prototype.toString.apply(index)==="[object Array]"&&index.length){
+                            for(i=0,len1=index.length;i<len1;i+=1){
+                                storeArray.push(this[index[i]]);
+                            }
+                            for(i=0,len1=index.length;i<len1;i+=1){
+                                for(j=index[i],len2=this.length;j<len2;j+=1){
+                                    this[j]=this[j+1];
+                                }
+                                this.length-=1;
+                            }
+                        }    
+                        return storeArray;
+                    },
+                    writable:false,
+                    configurable:false,
+                    enumerable:true
+                }  
     });
 })();
