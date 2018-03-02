@@ -601,6 +601,43 @@
                     writable:false,
                     configurable:false,
                     enumerable:true
-                }
+                },
+
+              // 删除调用方法的数组指定的元素
+              /**
+               * var array=[1,0,2,1,0,6,9,1,1,9];
+               * array.__pull(1);
+                 console.log(array);
+                 => [0,2,0,6,9,9]
+               * array.__pull(1,0);
+                 console.log(array);
+                 => [2,6,9,9]
+               */
+               __pull:{
+                  value:function(){
+                      var i,
+                          j,
+                          k,
+                          len1,
+                          len2,
+                          len3;
+                      if(this.length){
+                          for(i=0,len1=arguments.length;i<len1;i+=1){
+                              for(j=0,len2=this.length;j<len2;j+=1){
+                                  if(this[j]===arguments[i]){
+                                      for(k=j,len3=this.length;k<len3;k+=1){
+                                          this[k]=this[k+1];
+                                      }
+                                      this.length-=1;
+                                      j-=1;
+                                  }
+                              }
+                          }
+                      }    
+                  },
+                  writable:false,
+                  configurable:false,
+                  enumerable:true
+               }   
     });
 })();
