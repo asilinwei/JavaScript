@@ -671,6 +671,43 @@
                     writable:false,
                     configurable:false,
                     enumerable:true
-                }  
+                },
+
+                // 根据条件函数删除符合条件的元素，并返回已删除元素的新数组
+                /**
+                 * var array=[1,2,3,4];
+                   console.log(array.__remove(function(n){return n%2===0;}));
+                   => [2,4]
+                   console.log(array);
+                   => [1,3]
+                 */
+                __remove:{
+                    value:function(f){
+                        var storeArray=[],
+                            i,
+                            j,
+                            len1,
+                            len2;
+                        if(this.length&&f!==undefined){
+                            i=0;
+                            len1=this.length;
+                            while(i<len1){
+                                if(f(this[i])){
+                                    storeArray.push(this[i]);
+                                    for(j=i,len2=this.length;j<len2;j+=1){
+                                        this[j]=this[j+1];
+                                    }
+                                    this.length-=1;
+                                    i-=1;
+                                }
+                                i+=1;
+                            }
+                        }    
+                        return storeArray;
+                    },
+                    writable:false,
+                    configurable:false,
+                    enumerable:true
+                }
     });
 })();
