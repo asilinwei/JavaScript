@@ -708,6 +708,31 @@
                     writable:false,
                     configurable:false,
                     enumerable:true
-                }
+                },
+
+                // 将数组元素颠倒，第一个元素成为最后一个，第二个元素成为倒数第二个元素，以此类推
+                /** 
+                 * var array=[1,2,3,4,5];
+                   array.__reverse();
+                   console.log(array);
+                   => [5,4,3,2,1]
+                 */
+                __reverse:{
+                    value:function(){
+                        var i,
+                            j,
+                            temp;
+                        if(this.length){
+                            for(i=0,j=this.length-1;i<=j;i+=1,j-=1){
+                                temp=this[i];
+                                this[i]=this[j];
+                                this[j]=temp;
+                            }
+                        }    
+                    },
+                    writable:false,
+                    configurable:false,
+                    enumerable:true
+                }   
     });
 })();
