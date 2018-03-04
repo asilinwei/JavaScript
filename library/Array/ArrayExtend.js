@@ -8,11 +8,20 @@
     // 共享接口
     function Share(){
 
-        // 定义将一个数组的元素推入另一个数组的方法，参数array2的所有元素都推入array1
+        // 定义将一个数组的元素推入另一个数组的方法，参数array2的所有元素都推入参数array1
         this.pushArray=function(array1,array2){
             for(var i=0,len=array2.length;i<len;i+=1){
                 array1.push(array2[i]);
             }
+        };
+
+        // 定义根据指定索引将一个数组的元素推入另一个数组的方法，参数array2的元素推入参数array1,参数s为起始索引,e为结束索引
+        this.pushArrayIndex=function(array1,array2,s,e){
+            var i,
+                len;
+            for(i=s,len=e;i<len;i+=1){
+                array1.push(array2[i]);
+            }    
         };
         
         // 根据条件寻找索引的方法
@@ -688,7 +697,7 @@
                             j,
                             len1,
                             len2;
-                        if(this.length&&f!==undefined){
+                        if(this.length&&f!==undefined&&typeof f==="function"){
                             i=0;
                             len1=this.length;
                             while(i<len1){
@@ -733,6 +742,40 @@
                     writable:false,
                     configurable:false,
                     enumerable:true
-                }   
+                },
+
+                // 根据索引返回数组片段，不包括索引为end的元素，默认数组片段是数组的所有元素
+                /**
+                 * var array=[0,1,2,3,4,5];
+                 * console.log(array.__slice());
+                   => [0,1,2,3,4,5]
+                 * console.log(array.__slice(1));
+                   => [1,2,3,4,5]
+                 * console.log(array.__slice(1,4));
+                   => [1,2,3]
+                 */
+                 __slice:{
+                    value:function(start,end){
+                        var storeArray=[];
+                        if(this.length){
+                            switch(true){
+                                case start===undefined&&end===undefined:
+                                     share.pushArrayIndex(storeArray,this,0,this.length);
+                                     break;
+                                case start!==undefined&&end===undefined:
+                                     share.pushArrayIndex(storeArray,this,start,this.length);
+                                     break;
+                                case start!==undefined&&end!==undefined&&start<end:
+                                     share.pushArrayIndex(storeArray,this,start,end);
+                                     break;
+                                default:;               
+                            }
+                        }
+                        return storeArray;
+                    },
+                    writable:false,
+                    configurable:false,
+                    enumerable:true
+                 }    
     });
 })();
