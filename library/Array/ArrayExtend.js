@@ -874,6 +874,40 @@
                         writable:false,
                         configurable:false,
                         enumerable:true
-                    }   
+                    },
+
+                    // 对数组进行解包，返回一个新数组
+                    /**
+                     * var array=[['a',true,1],['b',false,2],['c',true,3]];
+                       console.log(array.__unzip());
+                       => [['a','b','c'],[true,false,true],[1,2,3]]
+                     */
+                     __unzip:{
+                        value:function(){
+                            var storeArray=[],
+                                store,
+                                i,
+                                j,
+                                k,
+                                len1,
+                                len2,
+                                len3;
+                            if(this.length){
+                                for(i=0,j=0,len1=this.length,len2=this[i].length;i<len1||j<len2;i+=1,j+=1){
+                                    store=[];
+                                    for(k=0,len3=this.length;k<len3;k+=1){
+                                        if(this[k][j]!==undefined){
+                                            store.push(this[k][j]);
+                                        }
+                                    }
+                                    storeArray.push(store);
+                                }
+                            }    
+                            return storeArray;
+                        },
+                        writable:false,
+                        configurable:false,
+                        enumerable:true
+                     }     
     });
 })();
