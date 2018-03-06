@@ -776,6 +776,104 @@
                     writable:false,
                     configurable:false,
                     enumerable:true
-                 }    
+                 },
+
+                 // 获取除了数组第一项之外的所有元素，返回该数组片段
+                 __tail:{
+                    value:function(){
+                        var storeArray=[];
+                        share.pushArrayIndex(storeArray,this,1,this.length);
+                        return storeArray;
+                    },
+                    writable:false,
+                    configurable:false,
+                    enumerable:true
+                 },    
+
+                 // 创建一个分割后的数组，从数组的开始到第n个元素，默认返回的数组包含原数组的所有元素
+                 /**
+                  * var array=[0,1,2,3,4,5];
+                    console.log(array.__take(1));
+                    => [0]
+                    console.log(array.__take(2));
+                    => [0,1]
+                    console.log(array.__take(100));
+                    => [0,1,2,3,4,5]
+                    console.log(array.__take());
+                    => [0,1,2,3,4,5]
+                  */
+                  __take:{
+                      value:function(n){
+                          var storeArray=[];
+                          if(this.length){
+                              n>=0&&n<this.length&&share.pushArrayIndex(storeArray,this,0,n);
+                              (n>=this.length||n===undefined)&&share.pushArrayIndex(storeArray,this,0,this.length);
+                          }
+                          return storeArray;
+                      },
+                      writable:false,
+                      configurable:false,
+                      enumerable:true
+                  },
+
+                  // 跟take方法相似，只是该方法是从后向前数的n个元素,默认返回的数组包含原数组的所有元素
+                  /**
+                   * var array=[1,2,3]
+                     console.log(array.__takeRight(1))；
+                     => [3]
+                     console.log(array.__takeRight(2));
+                     => [2,3]
+                     console.log(array.__takeRight(100));
+                     => [1,2,3]
+                     console.log(array.__takeRight());
+                     => [1,2,3]
+                   */
+                   __takeRight:{
+                      value:function(n){
+                          var storeArray=[];
+                          if(this.length){
+                              n>=0&&n<this.length&&share.pushArrayIndex(storeArray,this,this.length-n,this.length);
+                              (n>=this.length||n===undefined)&&share.pushArrayIndex(storeArray,this,0,this.length);
+                          }
+                          return storeArray;
+                      },
+                      writable:false,
+                      configurable:false,
+                      enumerable:true
+                   },
+
+                   // 数组去重
+                   /**
+                    * var array=[2,1,2];
+                      array.__uniq();
+                      console.log(array);
+                      => [2,1]
+                    */
+                    __uniq:{
+                        value:function(){
+                            var i,
+                                j,
+                                k,
+                                len1,
+                                len2,
+                                len3;
+                            if(this.length){
+                                for(i=0,len1=this.length;i<len1;i+=1){
+                                    for(j=i+1,len2=this.length;j<len2;j+=1){
+                                        if(this[i]===this[j]){
+                                            for(k=j,len3=this.length;k<len3;k+=1){
+                                                this[k]=this[k+1];
+                                            }
+                                            this.length-=1;
+                                            j-=1;
+                                        }
+                                    }
+                                }
+                            }    
+                        },
+                        writable:false,
+                        configurable:false,
+                        enumerable:true
+                    }   
     });
 })();
