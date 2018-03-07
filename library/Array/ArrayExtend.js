@@ -903,6 +903,9 @@
                                     storeArray.push(store);
                                 }
                             }    
+                            if(!storeArray[storeArray.length-1].length){
+                               storeArray.length-=1;
+                            }
                             return storeArray;
                         },
                         writable:false,
