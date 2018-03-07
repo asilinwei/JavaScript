@@ -902,10 +902,16 @@
                                     }
                                     storeArray.push(store);
                                 }
+                                for(i=0;i<storeArray.length;i+=1){
+                                    if(!storeArray[i].length){
+                                        for(j=i,len2=storeArray.length;j<len2;j+=1){
+                                            storeArray[j]=storeArray[j+1];
+                                        }
+                                        storeArray.length-=1;
+                                        i-=1;
+                                    }
+                                }
                             }    
-                            if(!storeArray[storeArray.length-1].length){
-                               storeArray.length-=1;
-                            }
                             return storeArray;
                         },
                         writable:false,
