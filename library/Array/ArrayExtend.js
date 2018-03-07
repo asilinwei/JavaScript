@@ -917,6 +917,42 @@
                         writable:false,
                         configurable:false,
                         enumerable:true
-                     }     
+                     },
+
+                     // 删除指定元素并返回一个新数组，注意此方法不会改变原数组
+                     /**
+                      * var array=[2,1,2,3];
+                        console.log(array.__without(1,2));
+                        => [3]
+                      */
+                      __without:{
+                          value:function(){
+                              var storeArray=[],
+                                  i,
+                                  j,
+                                  k,
+                                  len1,
+                                  len2,
+                                  len3;
+                              if(this.length){
+                                  share.pushArray(storeArray,this);
+                                  for(i=0,len1=arguments.length;i<len1;i+=1){
+                                      for(j=0;j<storeArray.length;j+=1){
+                                          if(arguments[i]===storeArray[j]){
+                                              for(k=j;k<storeArray.length;k+=1){
+                                                  storeArray[k]=storeArray[k+1];
+                                              }
+                                              storeArray.length-=1;
+                                              j-=1;
+                                          }
+                                      }
+                                  }
+                              }   
+                              return storeArray; 
+                          },
+                          writable:false,
+                          configurable:false,
+                          enumerable:true
+                      }       
     });
 })();
