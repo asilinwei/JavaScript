@@ -953,6 +953,54 @@
                           writable:false,
                           configurable:false,
                           enumerable:true
-                      }       
+                      },
+
+                      // 类似原生数组方法every
+                      /**
+                       * var array=[1,2,3,4,5];
+                         array.__every(function(element){
+                            console.log(element);
+                            return element<3;
+                         });
+                         => 1 2 3
+                       */
+                       __every:{
+                          value:function(fn){
+                              if(this.length){
+                                  for(var i=0,len=this.length;i<len;i+=1){
+                                      if(!fn(this[i])){
+                                         break;
+                                      }
+                                  }
+                              }
+                          },
+                          writable:false,
+                          configurable:false,
+                          enumerable:true
+                       },
+
+                       // 类似原生数组方法some
+                       /**
+                        * var array=[1,2,3,4,5];
+                          array.__some(function(element){
+                              console.log(element);
+                              return element>3;     
+                          });
+                          => 1 2 3 4
+                        */
+                        __some:{
+                            value:function(fn){
+                                if(this.length){
+                                    for(var i=0,len=this.length;i<len;i+=1){
+                                        if(fn(this[i])){
+                                            break;
+                                        }
+                                    }
+                                }
+                            },
+                            writable:false,
+                            configurable:false,
+                            enumerable:true
+                        }             
     });
 })();
