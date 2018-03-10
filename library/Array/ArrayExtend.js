@@ -966,7 +966,7 @@
                        */
                        __every:{
                           value:function(fn){
-                              if(this.length){
+                              if(this.length&&typeof fn==="function"){
                                   for(var i=0,len=this.length;i<len;i+=1){
                                       if(!fn(this[i])){
                                          break;
@@ -990,7 +990,7 @@
                         */
                         __some:{
                             value:function(fn){
-                                if(this.length){
+                                if(this.length&&typeof fn==="function"){
                                     for(var i=0,len=this.length;i<len;i+=1){
                                         if(fn(this[i])){
                                             break;
@@ -1001,6 +1001,86 @@
                             writable:false,
                             configurable:false,
                             enumerable:true
-                        }             
+                        },
+
+                        // 类似原生数组方法map
+                        /**
+                         * var array=[1,2,3,4,5];
+                           console.log(array.__map(function(element){
+                                return element*2;
+                           }));
+                           => [2,4,6,8,10]
+                         */
+                         __map:{
+                            value:function(fn){
+                                var storeArray=[],
+                                    i,
+                                    len;
+                                if(this.length&&typeof fn==="function"){
+                                    for(i=0,len=this.length;i<len;i+=1){
+                                        storeArray.push(fn(this[i]));
+                                    }
+                                }    
+                                return storeArray;
+                            },
+                            writable:false,
+                            configurable:false,
+                            enumerable:true
+                         },
+
+                         // 类似原生数组方法filter
+                         /**
+                          * var array=[1,2,3,4,5,6,7,8,9];
+                            console.log(array.__filter(function(element){
+                                return element%2===0;
+                            }));
+                            => [2,4,6,8]
+                          */            
+                          __filter:{
+                              value:function(fn){
+                                  var storeArray=[],
+                                      i,
+                                      len;
+                                  if(this.length&&typeof fn==="function"){
+                                      for(i=0,len=this.length;i<len;i+=1){
+                                          fn(this[i])&&storeArray.push(this[i]);
+                                      }
+                                  }    
+                                  return storeArray;
+                              },
+                              writable:false,
+                              configurable:false,
+                              enumerable:true
+                          },
+
+                          // 类似原生数组方法reduce
+                          /**
+                           * var array=[1,2,3,4,5];
+                             console.log(array.__reduce(function(result,element){
+                                  return result+element;
+                             }));
+                             => 15
+                             array=['one','two','three'];
+                             console.log(array.__reduce(function(result,element){
+                                  return result+element;
+                             }));
+                             => 'onetwothree'
+                           */
+                           __reduce:{
+                              value:function(fn){
+                                  var result;
+                                  if(this.length&&typeof fn==="function"){
+                                      result=this[0];
+                                      for(var i=1,len=this.length;i<len;i+=1){
+                                          result=fn(result,this[i]);
+                                      }
+                                  }
+                                  return result;
+                              },
+                              wirtable:false,
+                              configurable:false,
+                              enumerable:true
+                           }             
+                         
     });
 })();
