@@ -108,6 +108,11 @@
             }
             return -1;
         };
+
+        // 判断对象类型
+        this.checkType=function(obj,str){
+            return Object.prototype.toString.apply(obj)===str;
+        };
     } 
 
     var share=new Share();
@@ -1080,7 +1085,38 @@
                               wirtable:false,
                               configurable:false,
                               enumerable:true
-                           }             
+                           },
+
+                           // 通过迭代运行数组中的每个元素并扁平映射每个数组元素来创建一个新数组
+                           /**
+                            * var array=[1,2,3];
+                              console.log(array.__flatMap(function(element){
+                                  return [element,element];
+                              }));
+                              => [1,1,2,2,3,3]
+                            */  
+                            __flatMap:{
+                               value:function(fn){
+                                  var i,
+                                      j,
+                                      len1,
+                                      len2,
+                                      storeArray=[];
+                                  if(this.length&&typeof fn==="function"){
+                                      for(i=0,len1=this.length;i<len1;i+=1){
+                                          if(share.checkType(fn(this[i]),"[object Array]")){
+                                              for(j=0,len2=fn(this[i]).length;j<len2;j+=1){
+                                                  storeArray.push(fn(this[i])[j]);
+                                              }
+                                          }
+                                      }
+                                  }
+                                  return storeArray;    
+                               },
+                               writable:false,
+                               configurable:false,
+                               enumerable:true
+                            }               
                          
     });
 })();
