@@ -1116,7 +1116,30 @@
                                writable:false,
                                configurable:false,
                                enumerable:true
-                            }               
+                            },
+
+                            // 类似原生数组方法join，如果不传入实参，则返回undefined
+                            /**
+                             * var array=[1,2,3,4,5,6];
+                               console.log(array.__join('~'));
+                               => 1~2~3~4~5~6
+                             */
+                             __join:{
+                                value:function(sep){
+                                    var str;
+                                    if(this.length&&typeof sep==='string'){
+                                        str=this[0];
+                                        for(var i=1,len=this.length;i<len;i+=1){
+                                            str+=sep+this[i];
+                                        }
+                                    }
+                                    return str;
+                                },
+                                writable:false,
+                                configurable:false,
+                                enumerable:true
+                             }  
+
                          
     });
 })();
