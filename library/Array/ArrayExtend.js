@@ -113,6 +113,11 @@
         this.checkType=function(obj,str){
             return Object.prototype.toString.apply(obj)===str;
         };
+
+        // 判断是否为数字
+        this.isNumber=function(value){
+            return typeof value==="number"&&isFinite(value);
+        };
     } 
 
     var share=new Share();
@@ -1138,8 +1143,75 @@
                                 writable:false,
                                 configurable:false,
                                 enumerable:true
-                             }  
+                             },
 
-                         
+                             // 将数组元素相加返回总和，如果其中有元素不是数字，则返回0
+                             /**
+                              * var num=[1,2,3,4,5];
+                                console.log(num.__add());
+                                => 15
+                                num=[1,2,NaN,5];
+                                console.log(num.__add());
+                                => 0
+                              */
+                              __add:{
+                                  value:function(){
+                                      var sum=0,
+                                          i,
+                                          len;
+                                      if(this.length){
+                                          for(i=0,len=this.length;i<len;i+=1){
+                                              if(share.isNumber(this[i])){
+                                                 sum+=this[i];
+                                              } else{
+                                                  sum=0;
+                                                  break;
+                                              }
+                                          }
+                                      }    
+                                      return sum;
+                                  },
+                                  writable:false,
+                                  configurable:false,
+                                  enumerable:true
+                              },
+
+                              // 找出数组中最大的值，如果遇到数组元素不是数字则返回首个元素值
+                              /**
+                               * var num=[1,2,3,4,5];
+                                 console.log(num.__max());
+                                 => 5
+                                 num=[1,2,NaN,4];
+                                 console.log(num.__max());
+                                 => 1
+                                 num=[];
+                                 console.log(num.__max());
+                                 => undefined
+                               */
+                              __max:{
+                                  value:function(){
+                                      var max,
+                                          i,
+                                          len;
+                                      if(this.length){
+                                         max=this[0];
+                                         for(i=1,len=this.length;i<len;i+=1){
+                                            if(share.isNumber(this[i])){
+                                                if(this[i]>max){
+                                                    max=this[i];
+                                                } 
+                                            } else{
+                                                max=this[0];
+                                                break;
+                                            }
+                                         }
+                                      } 
+                                      return max;   
+                                  },
+                                  writable:false,
+                                  configurable:false,
+                                  enumerable:true
+                              }   
+
     });
 })();
