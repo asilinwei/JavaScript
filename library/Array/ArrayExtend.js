@@ -111,7 +111,16 @@
 
         // 判断对象类型
         this.checkType=function(obj,str){
-            return Object.prototype.toString.apply(obj)===str;
+            if(this.check(str,"string")){
+               return Object.prototype.toString.apply(obj)===str;
+            }
+        };
+
+        // 判断基本类型
+        this.check=function(value,str){
+            if(typeof str==="string"){
+               return typeof value===str;
+            }
         };
 
         // 判断是否为数字
@@ -1211,7 +1220,44 @@
                                   writable:false,
                                   configurable:false,
                                   enumerable:true
-                              }   
+                              },
+
+                              // 找出数组元素属性中值最大的值，该数组元素是对象，如果遇到不是对象的数组元素则返回当前最大的属性值
+                              // 该方法接受一个函数迭代每个数组元素
+                              /**
+                               * var objects=[{n:12},{n:2},{n:24},{n:11}];
+                                 console.log(objects.__maxBy(function(o){
+                                      return o.n;
+                                 }));
+                                 => 24
+                                 objects=[{n:12},{n:2},'lala',{n:11}];
+                                 console.log(objects.__maxBy(function(o){
+                                      return o.n;
+                                 }));
+                                 => 12
+                               */
+                               __maxBy:{
+                                  value:function(fn){
+                                      var max,
+                                          i,
+                                          len;
+                                      if(this.length&&share.check(fn,"function")){
+                                          max=share.checkType(this[0],"[object Object]")&&
+                                               share.isNumber(fn(this[0]))?
+                                                 fn(this[0]):
+                                                 undefined;
+                                          for(i=1,len=this.length;i<len&&max&&share.checkType(this[i],"[object Object]")&&fn(this[i]);i+=1){
+                                              if(fn(this[i])>max){
+                                                 max=fn(this[i]);
+                                              }
+                                          }       
+                                      }   
+                                      return max;
+                                  },
+                                  writable:false,
+                                  confugurable:false,
+                                  enumerable:true
+                               }     
 
     });
 })();
