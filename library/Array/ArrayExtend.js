@@ -1257,7 +1257,63 @@
                                   writable:false,
                                   confugurable:false,
                                   enumerable:true
-                               }     
+                               },
+
+                               // 求数组元素的平均值，如果数组为空或遇到不是数字的数组元素都返回0
+                               /**
+                                * var num=[1,2,3,4];
+                                  console.log(num.__mean());
+                                  => 2.5
+                                  num=[1,2,null,4];
+                                  console.log(num.__mean());
+                                  => 0
+                                  num=[];
+                                  console.log(num.__mean());
+                                  => 0
+                                */
+                                __mean:{
+                                    value:function(){
+                                        var sum=0;
+                                        if(this.length){
+                                            for(var i=0,len=this.length;i<len;i+=1){
+                                                if(share.isNumber(this[i])){
+                                                    sum+=this[i];
+                                                } else{
+                                                    sum=0;
+                                                    break;
+                                                }
+                                            }
+                                            return sum/this.length;
+                                        }
+                                        return sum;
+                                    },
+                                    writable:false,
+                                    configurable:false,
+                                    enumerable:true
+                                },
+
+                                __meanBy:{
+                                    value:function(fn){
+                                        var sum=0,
+                                            i,
+                                            len;
+                                        if(this.length&&share.check(fn,"function")){
+                                            for(i=0,len=this.length;i<len;i+=1){
+                                                if(share.checkType(this[i],"[object Object]")&&share.isNumber(fn(this[i]))){
+                                                    sum+=fn(this[i]);
+                                                } else{
+                                                    sum=0;
+                                                    break;
+                                                }
+                                            }
+                                            return sum/this.length;
+                                        }    
+                                        return sum;
+                                    },
+                                    writable:false,
+                                    configurable:false,
+                                    enumerable:true
+                                }       
 
     });
 })();
