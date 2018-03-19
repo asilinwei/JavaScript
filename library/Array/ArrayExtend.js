@@ -1353,7 +1353,46 @@
                                     writable:false,
                                     configurable:false,
                                     enumerable:true
-                                 }         
+                                 },
+
+                                 // 数组元素为对象，返回元素属性值最小的对象元素，如果为空数组则返回null
+                                 /**
+                                  * var objects=[{n:2},{n:3},{n:1}];
+                                    console.log(objects.__minBy(function(o){
+                                        return o.n;
+                                    }));
+                                    => 1
+                                  */
+                                  __minBy:{
+                                      value:function(fn){
+                                          var objMin,
+                                              min,
+                                              i,
+                                              len;
+                                          if(this.length&&share.check(fn,"function")){
+                                              min=share.checkType(this[0],"[object Object]")?
+                                              (share.isNumber(fn(this[0]))?fn(this[0]):
+                                                Number.MAX_VALUE):
+                                              Number.MAX_VALUE;
+                                              objMin=share.checkType(this[0],"[object Object]")?this[0]:null;
+                                              for(i=1,len=this.length;i<len;i+=1){
+                                                  if(share.checkType(this[0],"[object Object]")){
+                                                      if(share.isNumber(fn(this[i]))&&fn(this[i])<min){
+                                                          min=fn(this[i]);
+                                                          objMin=this[i];
+                                                      } 
+                                                  } else{
+                                                      break;
+                                                  }
+                                              }
+                                              return objMin;
+                                          }    
+                                          return null;
+                                      },
+                                      writable:false,
+                                      configurable:false,
+                                      enumerable:true
+                                  }           
 
     });
 })();
