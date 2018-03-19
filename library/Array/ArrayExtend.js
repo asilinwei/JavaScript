@@ -1313,7 +1313,47 @@
                                     writable:false,
                                     configurable:false,
                                     enumerable:true
-                                }       
+                                },
+
+                                // 返回数组元素中值最小的元素，如果遇到不是数字的元素或为空数组，返回undefined
+                                /**
+                                 * var nums=[5,4,3,2,1];
+                                   console.log(nums.__min());
+                                   => 1
+                                   nums=[5,4,3,2,NaN];
+                                   console.log(nums.__min());
+                                   => undefined
+                                   nums=[];
+                                   console.log(nums.__min());
+                                   => undefined
+                                 */
+                                 __min:{
+                                    value:function(){
+                                        var min,
+                                            i,
+                                            len;
+                                        if(this.length){
+                                            min=share.isNumber(this[0])?this[0]:undefined;
+                                            if(min){
+                                                for(i=0,len=this.length;i<len;i+=1){
+                                                    if(share.isNumber(this[i])){
+                                                        if(this[i]<min){
+                                                            min=this[i];
+                                                        }
+                                                    } else{
+                                                        min=undefined;
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                            return min;
+                                        }    
+                                        return min;
+                                    },
+                                    writable:false,
+                                    configurable:false,
+                                    enumerable:true
+                                 }         
 
     });
 })();
