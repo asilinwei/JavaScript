@@ -1392,7 +1392,75 @@
                                       writable:false,
                                       configurable:false,
                                       enumerable:true
-                                  }           
+                                  },
+
+                                  // 将数组元素相乘返回结果，如果遇到元素不是数字或为空数组则返回1
+                                  /**
+                                   * var nums=[2,3,4,5];
+                                     console.log(nums.__multiple());
+                                     => 120
+                                     nums=[2,3,'lala',4];
+                                     console.log(nums.__multiple());
+                                     => 1
+                                     nums=[];
+                                     console.log(nums.__multiple());
+                                     => 1
+                                   */
+                                   __multiple:{
+                                      value:function(){
+                                          var result=1,
+                                              i,
+                                              len;
+                                          if(this.length){
+                                              for(i=0,len=this.length;i<len;i+=1){
+                                                  if(share.isNumber(this[i])){
+                                                      result*=this[i];
+                                                  } else{
+                                                      result=1;
+                                                      break;
+                                                  }
+                                              }
+                                          }    
+                                          return result;
+                                      },
+                                      writable:false,
+                                      configurable:false,
+                                      enumerable:true
+                                   },
+
+                                   // 将数组元素从左到右相减，如果为空数组返回undefined
+                                   /**
+                                    * console.log([5,4,3].__subtract());
+                                      => -2
+                                      console.log(['',4,3].__subtract());
+                                      => 1
+                                      console.log([4,'',1].subtract());
+                                      => 3
+                                    */
+                                    __subtract:{
+                                        value:function(){
+                                            var result,
+                                                i;
+                                            if(this.length){
+                                                for(i=0;i<this.length;i+=1){
+                                                    if(share.isNumber(this[i])){
+                                                        result=this[i];
+                                                        break;
+                                                    }
+                                                }
+                                                for(i+=1;i<this.length;i+=1){
+                                                    if(share.isNumber(this[i])){
+                                                        result-=this[i];
+                                                    }
+                                                }
+                                            }    
+                                            return result;
+                                        },
+                                        writable:false,
+                                        configurable:false,
+                                        enumerable:true
+                                    }  
+
 
     });
 })();
