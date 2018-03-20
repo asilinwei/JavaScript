@@ -30,9 +30,9 @@
 		 */
 		__clamp:{
 			value:function(low,up){
-				if(share.isNumber(low)&&share.isNumber(up)){
+				if(share.isNumber(low)&&share.isNumber(up)&&low<=up){
 					switch(true){
-						case low<=this&&this<=up:
+						case low<=Number(this)&&Number(this)<=up:
 						     return Number(this);
 						case Number(this)>up:
 						     return up;
@@ -46,6 +46,29 @@
 			writable:false,
 			configurable:false,
 			enumerable:true
-		}   
+		},
+
+		// 判断数字是否在指定范围内
+		/**
+		 * var a=4;
+		   console.log(a.__inRange(2,5));
+		   => true
+		   console.log(a.__inRange(7,8));
+		   => false
+		   console.log(a.__inRange(2,3));
+		   => false
+		 */
+		 __inRange:{
+		 	value:function(low,up){
+		 		return share.isNumber(low)&&share.isNumber(up)&&low<=up?
+		 		(low<=Number(this)&&Number(this)<=up?
+		 			true:
+		 			false):
+		 		undefined;
+		 	},
+		 	writable:false,
+		 	configurable:false,
+		 	enumerable:true
+		 }     
 	});
 })(); 
