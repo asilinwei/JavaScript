@@ -116,7 +116,7 @@
             }
         };
 
-        // 判断基本类型
+        // 判断基本类型和函数对象
         this.check=function(value,str){
             if(typeof str==="string"){
                return typeof value===str;
