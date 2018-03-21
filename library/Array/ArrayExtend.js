@@ -127,6 +127,13 @@
         this.isNumber=function(value){
             return typeof value==="number"&&isFinite(value);
         };
+
+        // 柯里化处理函数
+        this.curry=function(key){
+            return function(obj){
+              return share.checkType(obj,"[object Object]")&&obj[key];
+            };
+        };
     } 
 
     var share=new Share();
@@ -1459,8 +1466,36 @@
                                         writable:false,
                                         configurable:false,
                                         enumerable:true
-                                    }  
+                                    },
 
+                                    // 根据对象属性名获取所有值
+                                    /**
+                                     * var data=[{a:2},{a:3,b:12},{a:100,b:11},{a:'lala'}];
+                                       console.log(data.__get('a'));
+                                       => [2,3,100,'lala']  
+                                       console.log(data.__get('b'));
+                                       => [12,11]
+                                     */
+                                     __get:{
+                                        value:function(name){
+                                            if(this.length&&share.check(name,"string")){
+                                                var array=this.__map(share.curry(name));
+                                                for(var i=0,k;i<array.length;i+=1){
+                                                    if(array[i]===undefined){
+                                                        for(k=i;k<array.length;k+=1){
+                                                            array[k]=array[k+1];
+                                                        }
+                                                        array.length-=1;
+                                                        i-=1;
+                                                    }
+                                                }
+                                            }
+                                            return array;
+                                        },
+                                        writable:false,
+                                        configurable:false,
+                                        enumerable:true
+                                     }   
 
     });
 })();
