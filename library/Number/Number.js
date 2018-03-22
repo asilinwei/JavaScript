@@ -4,6 +4,7 @@
  */
 
 ;(function(){
+	"use strict";
 	// 复用接口
 	function Share(){
 		// 判断是否为数字的方法

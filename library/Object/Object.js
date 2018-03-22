@@ -3,6 +3,7 @@
  * 仅供个人学习使用
  */
 ;(function(){
+	"use strict";
 	// 通用接口
 	function Share(){
 		// 判断对象类型
@@ -86,6 +87,36 @@
 			writable:false,
 			configurable:false,
 			enumerable:true
-		} 
+		}, 
+
+		// 如果原对象具有与给定对象实参的同名属性（包括对象实参的原型），则删除它
+		/**
+		 * var obj={a:1,b:2,c:3};
+		   function Foo(a){
+	       	   this.a=a;
+		   }
+		   Foo.prototype.b=4;
+		   console.log(obj.__restrict(new Foo(12)));
+		   => {c:3}
+		 */
+		 __restrict:{
+		 	value:function(){
+		 		var i,
+		 		    name;
+		 		for(i=0;i<arguments.length;i+=1){
+		 			if(share.checkObjType(arguments[i],"[object Object]")){
+		 				for(name in arguments[i]){
+		 					if(this.hasOwnProperty(name)){
+		 						delete this[name];
+		 					}
+		 				}
+		 			}
+		 		}    
+		 		return this;
+		 	},
+		 	writable:false,
+		 	configurable:false,
+		 	enumerable:true
+		 }
 	});
 })(); 

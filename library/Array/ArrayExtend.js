@@ -5,6 +5,7 @@
 
 
 ;(function(){
+     "use strict";
     // 共享接口
     function Share(){
 
