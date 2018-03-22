@@ -26,7 +26,7 @@
 	Object.freeze(share);
 
 	Object.defineProperties(Object.prototype,{
-		// 合并对象，如果原对象已经有既定属性，则修改它的值，该方法会改变原对象
+		// 合并对象的自有可枚举属性，如果原对象已经有既定属性，则修改它的值(被后面的值覆盖)，该方法会改变原对象
 		/**
 		 * var obj={a:2};
 		   console.log(obj.__assign({b:3},{c:4}));
@@ -54,6 +54,38 @@
 			writable:false,
 			configurable:false,
 			enumerable:true
-		}
+		},
+
+		// 合并对象的可枚举属性（包括原型对象），如果原对象已经有既定属性，则修改它的值（被后面的值覆盖），该方法会改变原对象
+		/**
+		 * var obj={a:1};
+		   function Foo1(b){
+	       	  this.b=b;
+		   }
+		   Foo.prototype.c=3;
+		   function Foo2(d){
+	          this.d=d;
+		   }
+		   Foo.prototype.e=5;
+		   console.log(obj.__extend(new Foo1(2),new Foo2(4)));
+		   => {a:1,b:2,c:3,d:4,e:5}
+		 */ 
+		__extend:{
+			value:function(){
+				var i,
+				    name;
+				for(i=0;i<arguments.length;i+=1){
+					if(share.checkObjType(arguments[i],"[object Object]")){
+						for(name in arguments[i]){
+							this[name]=arguments[i][name];
+						}
+					}
+				}    
+				return this;
+			},
+			writable:false,
+			configurable:false,
+			enumerable:true
+		} 
 	});
 })(); 
