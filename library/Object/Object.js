@@ -89,6 +89,59 @@
 			enumerable:true
 		}, 
 
+		// 将对象的自有属性复制到指定对象，包括属性的属性描述符，如果指定对象拥有同名属性，则跳过它。
+		/**
+		 * var obj1={};
+		   Object.defineProperties(obj1,{
+	       		a:{
+	               value:12,
+	               writable:true,
+	               configurable:true,
+	               enumerable:true
+	       		},
+	       		b:{
+	               value:'lala',
+	               writable:false,
+	               configurable:false,
+	               enumerable:false
+	       		}
+		   });
+		   var obj2={};
+		   Object.defineProperties(obj2,{
+	            a:{
+	               value:100,
+	               writable:false,
+	               configurable:false,
+	               enumerable:false
+	            }
+		   });
+		   console.log(Object.getOwnPropertyDescriptor(obj1.__extendDep(obj2),'a'));
+		   => { value:100, writable:false, configurable:false, enumerable:false }
+
+		   console.log(Object.getOwnPropertyDescriptor(obj1.__extendDep(obj2),'b'));
+		   => { value:'lala', writable:false, configurable:false, enumerable:false }
+		 */
+		 __extendDep:{
+		 	value:function(o){
+		 		if(share.checkObjType(o,'[object Object]')){
+		 			var names=Object.getOwnPropertyNames(this),
+		 			    des;
+                    for(var i=0;i<names.length;i+=1){
+                    	if(o.hasOwnProperty(names[i])){
+                    		continue;
+                    	} else{
+                    		des=Object.getOwnPropertyDescriptor(this,names[i]);
+                    		Object.defineProperty(o,names[i],des);
+                    	}
+                    }
+		 		}
+		 		return o;
+		 	},
+		 	writable:false,
+		 	configurable:false,
+		 	enumerable:true
+		 },  
+
 		// 如果原对象具有与给定对象实参的同名属性（包括对象实参的原型），则删除它
 		/**
 		 * var obj={a:1,b:2,c:3};
