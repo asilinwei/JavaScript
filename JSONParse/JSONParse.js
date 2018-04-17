@@ -11,9 +11,9 @@ var JSONParse=(function(){
                  return array();
             case /[0-9]/.test(ch):
                  return number();
-            case ch==='\"'||'\'':
+            case ch==='\"':
                  return string();
-            case ch==='t'||'f':
+            case ch==='t'||ch==='f':
                  return boolean();
             default:
                  throw new Error();                          
@@ -48,7 +48,20 @@ var JSONParse=(function(){
             next(',');
         }
     };
-    var array=function(){};
+    var array=function(){
+        var arr=[];
+        while(ch!==']'){
+            next();
+            if(ch!==','){
+                arr.push(parseValue());
+            }
+        }
+        if(ch===']'){
+            next(']');
+            return arr;
+        }    
+        next(',');
+    };
     var number=function(){
         var value='';
         var num;
@@ -56,11 +69,39 @@ var JSONParse=(function(){
             value+=ch;
             next();
         }
-        num= +value;  // ch==='}'||','
+        num= +value;  
         return num;
     };
-    var string=function(){};
-    var boolean=function(){};
+    var string=function(){
+        var value='';
+        next();
+        while(ch!=='\"'){
+            value+=ch;
+            next();
+        }
+        if(ch==='\"'){
+            next('\"');
+            return value;
+        }
+    };
+    var boolean=function(){
+        var value='';
+        switch(ch){
+            case 't':
+                 next('t');
+                 next('r');
+                 next('u');
+                 next('e');
+                 return true;
+            case 'f':
+                 next('f');
+                 next('a');
+                 next('l');
+                 next('s');
+                 next('e'); 
+                 return false;     
+        }
+    };
     return function(sourse){
         at=0;
         text=sourse;
