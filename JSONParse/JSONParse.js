@@ -4,6 +4,7 @@ var JSONParse=(function(){
     var text;
     var result;
     var parseValue=function(){
+        blank();
         switch(true){
             case ch==='{':
                  return object();
@@ -27,10 +28,16 @@ var JSONParse=(function(){
         at+=1;
         return ch;
     };
+    var blank=function(){
+        while(ch&&ch===' '){
+            next();
+        }
+    };
     var object=function(){
         var key;
         var obj={};
         next();
+        blank();
         while(ch){
             key='';
             next('\"');   // ch==='\"'
@@ -39,13 +46,17 @@ var JSONParse=(function(){
                 next();
             }
             next('\"');
+            blank();
             next(':');
+            blank();
             obj[key]=parseValue();
+            blank();
             if(ch==='}'){
                 next('}');
                 return obj;
             }
             next(',');
+            blank();
         }
     };
     var array=function(){
@@ -55,6 +66,7 @@ var JSONParse=(function(){
             if(ch!==','){
                 arr.push(parseValue());
             }
+            blank();
         }
         if(ch===']'){
             next(']');
@@ -104,9 +116,14 @@ var JSONParse=(function(){
     };
     return function(sourse){
         at=0;
+        ch=' ';
         text=sourse;
         next();
         result=parseValue();
+        blank();
+        if(ch){
+            throw new Error();
+        }
         return result;
     };
 })();
