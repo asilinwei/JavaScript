@@ -10,12 +10,14 @@ var JSONParse=(function(){
                  return object();
             case ch==='[':
                  return array();
-            case /[0-9]/.test(ch):
+            case /[0-9+.-]/.test(ch):
                  return number();
             case ch==='\"':
                  return string();
             case ch==='t'||ch==='f':
                  return boolean();
+            case ch==='n':
+                 return parseNull();     
             default:
                  throw new Error();                          
         }
@@ -77,7 +79,7 @@ var JSONParse=(function(){
     var number=function(){
         var value='';
         var num;
-        while(/[1-9]/.test(ch)){
+        while(/[0-9+.-]/.test(ch)){
             value+=ch;
             next();
         }
@@ -97,7 +99,6 @@ var JSONParse=(function(){
         }
     };
     var boolean=function(){
-        var value='';
         switch(ch){
             case 't':
                  next('t');
@@ -113,6 +114,13 @@ var JSONParse=(function(){
                  next('e'); 
                  return false;     
         }
+    };
+    var parseNull=function(){
+        next('n');
+        next('u');
+        next('l');
+        next('l');
+        return null;
     };
     return function(sourse){
         at=0;
