@@ -10,13 +10,13 @@
 
    console.log(JSONParse('{"key1":12,"key2":"linwei","key3":[1,2,3],"key4":{"num":36}}'));
 
-   => {key1:12,key2:"linwei",key3:[1,2,3],"key4":{num:36}}
+   => { key1:12, key2:"linwei", key3:[1,2,3], key4:{num:36} }
 
    Also,it can process the white space like this:
 
    console.log(JSONParse('   {   "key1"  :  12  ,  "key2"  :  "linwei"   }   '));
 
-   => {key1:12,key2:"linwei"}
+   => { key1:12, key2:"linwei" }
  */  
   
 
