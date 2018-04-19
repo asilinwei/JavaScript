@@ -1,9 +1,39 @@
+/*
+ * JSONParse.js
+   @LinWei
+   2018-04-18
+
+   This is a function of JSON parser.
+   You can use it like native JSON.parse in JavaScript.
+
+   For example:
+
+   console.log(JSONParse('{"key1":12,"key2":"linwei","key3":[1,2,3],"key4":{"num":36}}'));
+
+   => {key1:12,key2:"linwei",key3:[1,2,3],"key4":{num:36}}
+
+   Also,it can process the white space like this:
+
+   console.log(JSONParse('   {   "key1"  :  12  ,  "key2"  :  "linwei"   }   '));
+
+   => {key1:12,key2:"linwei"}
+ */  
+  
+
 var JSONParse=(function(){
-    var ch;
-    var at;
-    var text;
-    var result;
+    "use strict";
+
+    var ch;        // The current character.
+    var at;        // The index of character.
+    var text;      // The JSON text.
+    var result;    // The result of parsing.
+    
+
     var parseValue=function(){
+    
+    // Parse a JSON value.
+    // It could be a object, an array, a number, a string, a boolean value and a null value.
+
         blank();
         switch(true){
             case ch==='{':
@@ -22,7 +52,12 @@ var JSONParse=(function(){
                  throw new Error();                          
         }
     };
+
     var next=function(c){
+
+        // Eat a character.
+        // If a c parameter is provided, check if it matches the current character.
+
         if(c&&c!==ch){
             throw new Error();
         }
@@ -30,19 +65,27 @@ var JSONParse=(function(){
         at+=1;
         return ch;
     };
+
     var blank=function(){
+
+        // Process white space.
+
         while(ch&&ch===' '){
             next();
         }
     };
+
     var object=function(){
+
+        // Parse a object.
+
         var key;
         var obj={};
         next();
         blank();
         while(ch){
             key='';
-            next('\"');   // ch==='\"'
+            next('\"');   
             while(ch!=='\"'){
                 key+=ch;
                 next();
@@ -61,7 +104,11 @@ var JSONParse=(function(){
             blank();
         }
     };
+
     var array=function(){
+
+        // Parse an array.
+
         var arr=[];
         while(ch!==']'){
             next();
@@ -76,7 +123,11 @@ var JSONParse=(function(){
         }    
         next(',');
     };
+
     var number=function(){
+
+        // Parse a number.
+
         var value='';
         var num;
         while(/[0-9+.-]/.test(ch)){
@@ -86,7 +137,11 @@ var JSONParse=(function(){
         num= +value;  
         return num;
     };
+
     var string=function(){
+
+        // Parse a string.
+
         var value='';
         next();
         while(ch!=='\"'){
@@ -98,7 +153,11 @@ var JSONParse=(function(){
             return value;
         }
     };
+
     var boolean=function(){
+
+        // Parse a boolean value.
+
         switch(ch){
             case 't':
                  next('t');
@@ -115,13 +174,20 @@ var JSONParse=(function(){
                  return false;     
         }
     };
+
     var parseNull=function(){
+
+        // Parse a null value.
+
         next('n');
         next('u');
         next('l');
         next('l');
         return null;
     };
+
+    // Return a function which parse a JSON text.
+
     return function(sourse){
         at=0;
         ch=' ';
