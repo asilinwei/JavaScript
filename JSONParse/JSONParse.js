@@ -49,7 +49,7 @@ var JSONParse=(function(){
             case ch==='n':
                  return parseNull();     
             default:
-                 throw new Error();                          
+                 throw new TypeError('The type of value is error.');                          
         }
     };
 
@@ -59,7 +59,11 @@ var JSONParse=(function(){
         // If a c parameter is provided, check if it matches the current character.
 
         if(c&&c!==ch){
-            throw new Error();
+            if(ch==='u'){
+                throw new TypeError('Cannot receive function.');
+            } else{
+                throw new Error('Cannot match.');
+            }
         }
         ch=text.charAt(at);
         at+=1;
@@ -83,6 +87,10 @@ var JSONParse=(function(){
         var obj={};
         next();
         blank();
+        if(ch==='}'){
+            next('}');
+            return obj;
+        }
         while(ch){
             key='';
             next('\"');   
@@ -112,6 +120,11 @@ var JSONParse=(function(){
         var arr=[];
         while(ch!==']'){
             next();
+            blank();
+            if(ch===']'){
+                next(']');
+                return arr;
+            }
             if(ch!==','){
                 arr.push(parseValue());
             }
@@ -189,14 +202,18 @@ var JSONParse=(function(){
     // Return a function which parse a JSON text.
 
     return function(sourse){
-        at=0;
-        ch=' ';
-        text=sourse;
-        next();
-        result=parseValue();
-        blank();
-        if(ch){
-            throw new Error();
+        if(typeof sourse==='string'){
+            at=0;
+            ch=' ';
+            text=sourse;
+            next();
+            result=parseValue();
+            blank();
+            if(ch){
+                throw new SyntaxError('JSON syntax error.');
+            }
+        } else{
+            throw new TypeError('The argument is not a JSON string.');
         }
         return result;
     };
