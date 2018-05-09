@@ -21,48 +21,52 @@
 
 
 
-String.prototype.$_pad=(function(){
+if(!String.prototype.$_pad){
 
-	// check if is it a string.
-	var isString=function(string){
-		return typeof string==='string';
-	};
+	String.prototype.$_pad=(function(){
 
-	// check if is it a number.
-	var isNumber=function(value){
-		return typeof value==='number'&&isFinite(value);
-	};
-
-	// throw the error.
-	var error=function(){
-		throw {
-			name:'TypeError',
-			message:'string is not a string or length is not a number.'
+		// check if is it a string.
+		var isString=function(string){
+			return typeof string==='string';
 		};
-	};
 
+		// check if is it a number.
+		var isNumber=function(value){
+			return typeof value==='number'&&isFinite(value);
+		};
 
-	return function(string,length){
-
-		if(isString(string)&&isNumber(length)){
-
-			var array=Array.from(this);      
-			var difference=length-this.length;   // The difference between the specified length and the length of the current string.
-
-			// travel the specified string.
-			var loop=function(string){
-				for(var i=0;i<string.length&&j<difference;i+=1,j+=1){
-					array.push(string.charAt(i));
-				}
+		// throw the error.
+		var error=function(){
+			throw {
+				name:'TypeError',
+				message:'string is not a string or length is not a number.'
 			};
+		};
 
-			var j=0;
-			while(j<difference){
-				loop(string);
+
+		return function(string,length){
+
+			if(isString(string)&&isNumber(length)){
+
+				var array=Array.from(this);      
+				var difference=length-this.length;   // The difference between the specified length and the length of the current string.
+
+				// travel the specified string.
+				var loop=function(string){
+					for(var i=0;i<string.length&&j<difference;i+=1,j+=1){
+						array.push(string.charAt(i));
+					}
+				};
+
+				var j=0;
+				while(j<difference){
+					loop(string);
+				}
+			} else{
+				error();
 			}
-		} else{
-			error();
-		}
-		return array.join('');
-	};
-})();
+			return array.join('');
+		};
+	})();
+	
+}
