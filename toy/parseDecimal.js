@@ -1,11 +1,15 @@
 if(!window.parseDecimal){
 	var parseDecimal=(function(){
+		"use strict";
 		var isString=function(value){
 			return typeof value==='string';
 		};
 		var isNumber=function(value){
 			return typeof value==='number'&&
 			       isFinite(value);
+		};
+		var isBoolean=function(value){
+			return typeof value==='boolean';
 		};
 		var error=function(type,message){
 			throw {
@@ -24,7 +28,7 @@ if(!window.parseDecimal){
 				    	} else{
 				    		error('TypeError','The argument must be a number.');
 				    	}
-				    };
+				    },
 				    pointNumber=function(string,num,ch){
 				    	if(isString(string)&&isNumber(num)){
 				    		var length=string.length,
@@ -37,11 +41,16 @@ if(!window.parseDecimal){
 				    		}
 				    	}
 				    	return count===num;
+				    },
+				    isFloatFormat=function(bool1,bool2,bool3){
+				    	if(isBoolean(bool1)&&isBoolean(bool2)&&isBoolean(bool3)){
+				    		return bool1&&bool2&&bool3;
+				    	}
 				    };
 				for(var i=0;i<length;i+=1){
 					var ch=string.charAt(i);
 					if(/[0-9.]/.test(ch)){
-						if(string.includes('.')&&pointIndex(0,1)&&pointNumber(string,1,'.')){
+						if(isFloatFormat(string.includes('.'),pointIndex(0,1),pointNumber(string,1,'.'))){
 							str+=ch;
 						} else if(!string.includes('.')){
 							str+=ch;
