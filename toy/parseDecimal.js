@@ -50,7 +50,10 @@ if(!window.parseDecimal){
 				for(var i=0;i<length;i+=1){
 					var ch=string.charAt(i);
 					if(/[0-9.]/.test(ch)){
-						if(isFloatFormat(string.includes('.'),pointIndex(0,1),pointNumber(string,1,'.'))){
+						var bool1=string.includes('.'),
+						    bool2=pointIndex(0,1),
+						    bool3=pointNumber(string,1,'.');
+						if(isFloatFormat(bool1,bool2,bool3)){
 							str+=ch;
 						} else if(!string.includes('.')){
 							str+=ch;
