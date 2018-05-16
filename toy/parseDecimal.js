@@ -63,11 +63,15 @@ if(!window.parseDecimal){
 					} else{
 						break;
 					}
-				}    
+				} 
+				if(str!==''){
+					return +str;
+				} else{
+					error('FormatError','Bad Number');
+				}   
 			} else{
 				error('TypeError','The argument must be a string');
 			}
-			return +str;
 		};
 	})();
 }
