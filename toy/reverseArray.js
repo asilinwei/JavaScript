@@ -42,7 +42,6 @@ if(!Array.prototype.$_reverse){
 		return function(){
 			if(this.length){
 				var count=(this.length+1)/2;
-				var temp;
 				for(var i=0,j=this.length-1;i<count-1;i+=1,j-=1){
 					exchange(this,i,j);
 				}
