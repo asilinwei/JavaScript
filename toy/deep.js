@@ -47,18 +47,22 @@ if(!window.flatternDeep){
 			return toString.apply(array)==='[object Array]';
 		};
 
-		// The final result array.
-		var result=[];
-
-		return function(array){
-			if(isArray(array)){
-				for(var i=0;i<array.length;i+=1){
-					if(isArray(array[i])){
-						flatternDeep(array[i]);  // recursion.
+		// push the element into array.
+		var pushIntoArray=function(array1,array2){
+			if(isArray(array1)&&isArray(array2)){
+				for(var i=0;i<array1.length;i+=1){
+					if(isArray(array1[i])){
+						pushIntoArray(array1[i],array2);
 					} else{
-						result.push(array[i]);   // push the element into the final array. 
+						array2.push(array1[i]);
 					}
 				}
+			}
+		};
+		return function(array){
+			var result=[];  // The final result.
+			if(isArray(array)){
+				pushIntoArray(array,result);
 			}
 			return result;
 		};
@@ -94,21 +98,26 @@ if(!window.flatternDepth){
 			}
 		};
 
-		// The final result array.
-		var result=[];
-
-		return function(array,n){
-			n=n||0;    // The default depth.
-			if(isArray(array)&&isNumber(n)&&n>=0){
+        // push the element into array.
+		var pushIntoArray=function(array1,array2,n){
+			if(isArray(array1)&&isArray(array2)&&isNumber(n)){
 				var count=n;
-				for(var i=0;i<array.length;i+=1){
-					if(isArray(array[i])&&count!==0){
+				for(var i=0;i<array1.length;i+=1){
+					if(isArray(array1[i])&&count!==0){
 						count-=1;
-						flatternDepth(array[i],count);  // recursion.
+						pushIntoArray(array1[i],array2,count);
 					} else{
-						result.push(array[i]);  // push the element into the final array.
+						array2.push(array1[i]);
 					}
 				}
+			}
+		};
+
+		return function(array,n){
+			var result=[];  // The final result.
+			n=n||0;    // The default depth.
+			if(isArray(array)&&isNumber(n)&&n>=0){
+				pushIntoArray(array,result,n);
 			} else{
 				error('ArgumentError');
 			}
