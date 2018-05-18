@@ -12,9 +12,6 @@
   	Arguments:
   	array(Array): The array to flatten.
 
-  	Return:
-  	The new flatterned array.
-
   	For example:
   	var array=[1,[2,3,[4,5]]];
 
@@ -29,9 +26,6 @@
   	Arguments:
   	array(Array): The array to flatten.
   	[depth=0](number): The maximum recursion depth.
-
-  	Return:
-  	The new flatterned array.
 
   	For example:
   	var array=[1,[2,3,[4,5]]];
