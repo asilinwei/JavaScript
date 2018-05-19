@@ -1,13 +1,22 @@
-/*
+/**
  * 2018-05-19
    @linweinb
    
+   chunk:
+   Return a new array of elements split into groups the length of size.
+   If array can't be split evenly, the final chunk will be the remaining
+   elements.
+
    Syntax:
    	chunk(array,[size=array.length]);	
 
    Arguments
    	array(Array): The array to split into.
 	[size=array.length](number): The length of each chunk.
+
+   Return:
+   A new array of chunks.
+
    
    For example:
    var array=[1,2,3,4,5,6];
@@ -48,8 +57,8 @@ if(!window.chunk){
 			if(isArray(array)&&array.length){
 				size=size||array.length;   // the defalut length of each chunk.
 				if(isNumber(size)){
-					var result=[];   
-					var section=[];  
+					var result=[];   // the new array of chunks.
+					var section=[];  // each chunk. 
 					for(var i=0;i<array.length;i+=1){
 						if(section.length<size){
 							push(array,result,section,i);

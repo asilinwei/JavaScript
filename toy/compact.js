@@ -1,7 +1,18 @@
-/*
+/**
  * 2018-05-19
    @linweinb
 
+   compact:
+	Return a new array with all falsy values removed.
+
+   Syntax:
+   compact(array);
+
+   Arguments:
+   array(Array): The array to compact.
+
+   Return:
+   A new array of filtered values.
 
    For example:
     var array=[1,0,null,7,''];
