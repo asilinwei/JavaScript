@@ -2,7 +2,6 @@
  * 2018-05-19
    @linweinb
 
-   Remove all the falsy element, return a new array.
 
    For example:
     var array=[1,0,null,7,''];
