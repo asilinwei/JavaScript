@@ -2,7 +2,7 @@
  * 2018-05-19
    @linweinb
    
-   Split array into groups the length of size, return a new array.
+   Split array into a lot of chunks. 
 
    Syntax:
    	chunk(array,[size=array.length]);	
@@ -50,8 +50,8 @@ if(!window.chunk){
 			if(isArray(array)&&array.length){
 				size=size||array.length;   // the defalut length of each chunk.
 				if(isNumber(size)){
-					var result=[];   // the new array to return.
-					var section=[];  // each chunk.
+					var result=[];   
+					var section=[];  
 					for(var i=0;i<array.length;i+=1){
 						if(section.length<size){
 							push(array,result,section,i);
