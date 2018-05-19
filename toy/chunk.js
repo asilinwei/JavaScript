@@ -2,8 +2,6 @@
  * 2018-05-19
    @linweinb
    
-   Split array into a lot of chunks. 
-
    Syntax:
    	chunk(array,[size=array.length]);	
 
