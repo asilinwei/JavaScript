@@ -39,8 +39,8 @@ if(!window.trim){
 
 		return function(string){
 			if(isString(string)){
-				var match=string.match(/\b[a-z\s]+\b/ig);   // match the result.
-				return match.join('');
+				var match=string.match(/\b[\S\s]+\b/ig);   // match the result.
+				return match?match.join(''):'';
 			} else{
 				throw new CustomError('ArgumentsError','Not string.');
 			}
