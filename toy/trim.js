@@ -39,7 +39,7 @@ if(!window.trim){
 
 		return function(string){
 			if(isString(string)){
-				var match=string.match(/\b[\S\s]+\b/ig);   // match the result.
+				var match=string.match(/\S[\S\s]+\S/ig);   // match the result.
 				return match?match.join(''):'';
 			} else{
 				throw new CustomError('ArgumentsError','Not string.');
