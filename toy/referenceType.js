@@ -41,14 +41,14 @@ if(!window.referenceType){
 		var getPrototypeOf=Object.getPrototypeOf;
 		var objPrototype=Object.prototype;
 
-		// the Type class.
-		var Type=function(){
+		// the type class.
+		function Type(){
 			this.array='[object Array]';
 			this.obj='[object Object]';
 			this.fn='[object Function]';
 			this.date='[object Date]';
 			this.regexp='[object RegExp]';
-		};
+		}
 		var type=new Type();
 
 		// check if it is an object literal.
