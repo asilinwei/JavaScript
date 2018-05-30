@@ -37,22 +37,22 @@ if(!window.primitiveType){
 
 		// check if it is a number.
 		var isNumber=function(value){
-			return typeof value==='number'&&isFinite(value);
+			return typeof value===type.number&&isFinite(value);
 		};
 
 		// check if it is a string.
 		var isString=function(value){
-			return typeof value==='string';
+			return typeof value===type.string;
 		};
 
 		// check if it is a boolean value.
 		var isBoolean=function(value){
-			return typeof value==='boolean';
+			return typeof value===type.boolean;
 		};
 
 		// check if it is undefined.
 		var isUndefined=function(value){
-			return typeof value==='undefined';
+			return typeof value===type.undefined;
 		};
 
 		// check if it is null.
@@ -64,6 +64,15 @@ if(!window.primitiveType){
 		var isNaN=function(value){
 			return value!==value;
 		};
+
+		// the type class.
+		function Type(){
+			this.number='number';
+			this.string='string';
+			this.boolean='boolean';
+			this.undefined='undefined';
+		}
+		var type=new Type();
 
 		return function(value){
 			switch(true){
