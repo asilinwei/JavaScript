@@ -58,7 +58,7 @@ if(!window.join){
 
 		// the length of array.
 		var length=function(x){
-			return x.length>=0?x.length:undefined;
+			return x.length>=0?x.length:0;
 		};
 
 		// the length of the final string.
