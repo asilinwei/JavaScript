@@ -71,9 +71,13 @@ if(!window.join){
 			return num%2===0;
 		};
 
+		var compare=function(a,b){
+			return a<b;
+		};
+
 		// push element.
 		var push=function(array,store,string){
-			for(var i=0;i<finalLength(array);i+=1){
+			for(var i=0;compare(i,finalLength(array));i+=1){
 				if(isEvenNumber(i)){
 					store.push(isString(array[i/2])?array[i/2]:'');
 					continue;
