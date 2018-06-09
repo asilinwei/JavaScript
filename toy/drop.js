@@ -51,8 +51,8 @@ if(!window.drop){
 			if(isArray(array)){
 				var length=array.length;
 				return isNumber(value)&&
-					   value>=0&&
-					   value<=length;
+					   !(value>=0&&
+					   value<=length);
 			}
 		};
 
@@ -78,7 +78,7 @@ if(!window.drop){
 
 				n=n||0;    // the default number is zero.
 
-				if(isOverflow(array,n)){
+				if(!isOverflow(array,n)){
 					for(var i=0;i<length;i+=1){
 						if(i<n){
 							continue;
