@@ -134,7 +134,6 @@ if(!window.intersection){
 		return function(){
 			var args=arguments;
 			if(type.isArray(args[0])){
-				var count;
 				var result=[];
 				process(args,result);
 				return result;
