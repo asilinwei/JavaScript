@@ -87,11 +87,15 @@ if(!window.isArrayLike){
 			// check if it is the string includes number character.
 			// like '0', '1', '2'.
 			isNumString:function(value){
-				return this.isNumber(value-1);
+				return this.isNumber(value-1)&&this.isInteger(value);
 			},
 
 			isString:function(value){
 				return this.typeOf(value)===this.string;
+			},
+
+			isInteger:function(value){
+				return value%1===0;
 			}
 
 		};
