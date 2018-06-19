@@ -6,10 +6,10 @@
  * Check if it is array-like.
  *
  * Syntax:
- * isArrayLike(something)
+ * isArrayLike(a)
  *
  * Arguments:
- * something(*): Something to check.
+ * a(*): What to check.
  *
  * Return:
  * true if it is array-like, else false. 
@@ -137,13 +137,13 @@ if(!window.isArrayLike){
 		var tool=new Tool();
 		var process=new Process();
 		
-		return function(something){
+		return function(a){
 			switch(true){
-				case type.isArray(something):
-				case type.isString(something):
+				case type.isArray(a):
+				case type.isString(a):
 				     return true;
-				case type.isObject(something):
-				     return process.check(something); 
+				case type.isObject(a):
+				     return process.check(a); 
 				default:
 				     return false;       
 			}
