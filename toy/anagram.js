@@ -71,12 +71,12 @@ if(!window.anagram){
 			return false;
 		};
 
-		var push=function(array,result,cur,find){
-			if(sortJoin(array[cur])===sortJoin(array[find])){
-				if(!include(result,array[cur])){
-					result.push(array[cur]);
+		var push=function(array,result,a,b){
+			if(sortJoin(array[a])===sortJoin(array[b])){
+				if(!include(result,array[a])){
+					result.push(array[a]);
 				}
-				result.push(array[find]);
+				result.push(array[b]);
 			}
 		};
 
