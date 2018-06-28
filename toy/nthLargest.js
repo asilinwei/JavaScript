@@ -9,7 +9,7 @@
  * nthLargest(array, [nth=1])
  *
  * Note: 
- * If the number of n-th is overflow, return null.
+ * If the number of n-th is overflow, return undefined.
  * If the elements of array is not all numbers, return null.
  * 
  * Arguments:
