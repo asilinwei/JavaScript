@@ -21,10 +21,10 @@
  * For example:
  *
  * anagram(['he', 'hello', 'abc', 'lolhe', 'oellh', 'llo'])
- * // => ['hello', 'lolhe', 'oellh']
+ * // => [['he'], ['abc'], ['llo'], ['hello', 'lolhe', 'oellh']]
  *
  * anagram(['abc', 'cba', 'he', 'eh', 'lala'])
- * // => ['abc', 'cba', 'he', 'eh']
+ * // => [['lala'], ['abc', 'cba'], ['he', 'eh']]
  *
  */
 
@@ -104,15 +104,50 @@ if(!window.anagram){
 				message:message
 			};
 		};
+
+		// make groups.
+		var groups=function(find,result){
+			var mark=sortJoin(find[0]);
+			var chunk=[];
+			for(var i=0;i<length(find);i+=1){
+				if(sortJoin(find[i])===mark){
+					chunk.push(find[i]);
+					if(i===length(find)-1){
+						result.push(chunk);
+					}
+				} else{
+					result.push(chunk);
+					chunk=[];
+					chunk.push(find[i]);
+					mark=sortJoin(find[i]);
+				}
+			}
+		};
+
+		// other groups.
+		var other=function(array,find,result){
+			for(var i=0,chunk;i<length(array);i+=1){
+				if(include(find,array[i])){
+					continue;
+				}
+				chunk=[];
+				chunk.push(array[i]);
+				result.push(chunk);
+			}
+		};
 		
 		return function(array){
 			if(isArray(array)){
+				var find=[];
 				var result=[];
-				loop(array,result);
+				loop(array,find);
+				other(array,find,result);
+				groups(find,result);
 				return result;
 			}
 			error('ArgsError','Not array.');
 		};
 	})();
 }
+
 
