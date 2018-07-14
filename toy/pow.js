@@ -3,14 +3,14 @@
  * @LinWei
  * 
  * pow:
- * Return the n power of x.
+ * Return the n exponent of x.
  *
  * Syntax:
  * pow(x, n)
  *
  * Arguments:
  * x(number): The base.
- * n(number): The power.
+ * n(number): The exponent.
  *
  * Return:
  * The n power of x. 
