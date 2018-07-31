@@ -49,27 +49,37 @@ if(!window.shortest){
 			return isString(value)&&length(value)===1;
 		};
 
-		var distance=function(shortest,chunk,index){
+		var distance=function(string,shortest,chunk,index){
 			for(var i=0,distance;i<length(chunk);i+=1){
-				distance=index!==undefined?index-i:min(i+1,length(chunk)-i);
+				if(index===length(string)-1){
+					distance=i+1;
+				} else if(index!==undefined){
+					distance=index-i;
+				} else{
+					distance=min(i+1,length(chunk)-i);
+				}
 				shortest.push(distance);
 			}
-			shortest.push(0);
+			if(index!==length(string)-1){
+				shortest.push(0);
+			}
 		};
 
 		var push=function(string,shortest,array,c){
 			for(var i=0,j,chunk=[];i<length(string);i+=1){
 				if(string[i]!==c){
 					chunk.push(string[i]);
+					if(i===length(string)-1){
+						distance(string,shortest,chunk,i);
+					}
 				} else{
 					if(!length(array)){
-						distance(shortest,chunk,i);
-						chunk=[];
+						distance(string,shortest,chunk,i);
 					} else{
-						distance(shortest,chunk);
-						chunk=[];
+						distance(string,shortest,chunk);
 					}
 					array.push(chunk);
+					chunk=[];
 				}
 			}
 		};
