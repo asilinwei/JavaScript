@@ -103,7 +103,9 @@ if(!window.shuffle){
 
 		return function(array){
 			if(isArray(array)){
-				checkElement(array)&&shuffle(array);
+				if(checkElement(array)){
+					shuffle(array);
+				}
 				return array;
 			}
 			error('ArgsError','Not array.');
