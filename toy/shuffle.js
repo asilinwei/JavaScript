@@ -19,7 +19,7 @@
  * array(Array): The array to shuffle.
  *
  * Return:
- * The shuffle array.
+ * undefined
  *
  * For example:
  *
@@ -106,7 +106,7 @@ if(!window.shuffle){
 				if(checkElement(array)){
 					shuffle(array);
 				}
-				return array;
+				return;
 			}
 			error('ArgsError','Not array.');
 		};
