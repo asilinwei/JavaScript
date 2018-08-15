@@ -10,7 +10,7 @@
  *
  * Note:
  * This method mutates the array.
- * If the array has object type element, it will not mutate the array.
+ * If the array has object type element, the method will not mutate the array.
  *
  * Syntax:
  * shuffle(array)
