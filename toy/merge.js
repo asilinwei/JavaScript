@@ -27,13 +27,11 @@ if (!window.merge) {
          if (result.hasOwnProperty(key)) {
             var resultValue = result[key];
 
-            if (Array.isArray(resultValue)) {
-               if (!resultValue.flag) {
-                  initialise(result, key, resultValue);
-               }
-            } else {
+            if (Array.isArray(resultValue) && 
+               !resultValue.flag || 
+               !Array.isArray(resultValue)) {
                initialise(result, key, resultValue);
-            }
+            } 
             result[key].push(obj[index][key]);
          } else {
             result[key] = obj[index][key];
