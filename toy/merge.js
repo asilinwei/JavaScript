@@ -27,8 +27,7 @@ if (!window.merge) {
          if (result.hasOwnProperty(key)) {
             var resultValue = result[key];
 
-            if (Array.isArray(resultValue) && !resultValue.flag 
-               || !Array.isArray(resultValue)) {
+            if (Array.isArray(resultValue) && !resultValue.flag || !Array.isArray(resultValue)) {
                initialise(result, key, resultValue);
             } 
             result[key].push(obj[index][key]);
