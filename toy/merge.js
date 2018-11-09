@@ -27,9 +27,8 @@ if (!window.merge) {
          if (result.hasOwnProperty(key)) {
             var resultValue = result[key];
 
-            if (Array.isArray(resultValue) && 
-               !resultValue.flag || 
-               !Array.isArray(resultValue)) {
+            if (Array.isArray(resultValue) && !resultValue.flag 
+               || !Array.isArray(resultValue)) {
                initialise(result, key, resultValue);
             } 
             result[key].push(obj[index][key]);
@@ -53,6 +52,7 @@ if (!window.merge) {
 
          while (++index < size(obj)) {
             if (typeof obj[index] === 'object' && obj[index] !== null) {
+               remove(obj[index]);
                travelKeys(result, obj, index);
             }
          }
