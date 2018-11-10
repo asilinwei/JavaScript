@@ -14,6 +14,16 @@ if (!Object.prototype.deepClone) {
          return typeof obj === 'object' && obj !== null;
       };
 
+      var getValue = function(base, key) {
+         if (Array.isArray(base[key])) {
+            return array(base[key]);
+         } else if (isObject(base[key])) {
+            return object(base[key]);
+         } else {
+            return base[key];
+         }
+      };
+
       var array = function(array) {
          var result = [],
              index = -1;
@@ -32,13 +42,7 @@ if (!Object.prototype.deepClone) {
 
          while (++index < size(getKeys)) {
             key = getKeys[index];
-            if (Array.isArray(base[key])) {
-               result[key] = array(base[key]);
-            } else if (isObject(base[key])) {
-               result[key] = object(base[key]);
-            } else {
-               result[key] = base[key];
-            }
+            result[key] = getValue(base, key);
          }
          return result;
       };
